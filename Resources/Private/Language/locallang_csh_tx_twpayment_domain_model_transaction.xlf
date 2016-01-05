@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-05T18:05:31Z" product-name="tw_payment">
+		<header/>
+		<body>
+			<trans-unit id="sender.description">
+				<source>Payment sender</source>
+			</trans-unit>
+			<trans-unit id="amount.description">
+				<source>Payment amount</source>
+			</trans-unit>
+			<trans-unit id="description.description">
+				<source>Transaction description</source>
+			</trans-unit>
+			<trans-unit id="template.description">
+				<source>Use as template</source>
+			</trans-unit>
+			<trans-unit id="token.description">
+				<source>Payment token</source>
+			</trans-unit>
+			<trans-unit id="created.description">
+				<source>Payment token creation date</source>
+			</trans-unit>
+			<trans-unit id="error.description">
+				<source>Error message</source>
+			</trans-unit>
+			<trans-unit id="charged.description">
+				<source>Payment charge date</source>
+			</trans-unit>
+			<trans-unit id="currency.description">
+				<source>currency</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

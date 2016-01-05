@@ -1,0 +1,255 @@
+{
+    "modules": [
+        {
+            "config": {
+                "position": [
+                    26,
+                    60
+                ]
+            },
+            "name": "New Model Object",
+            "value": {
+                "actionGroup": {
+                    "_default0_list": false,
+                    "_default1_show": true,
+                    "_default2_new_create": false,
+                    "_default3_edit_update": false,
+                    "_default4_delete": false,
+                    "customActions": []
+                },
+                "name": "Transaction",
+                "objectsettings": {
+                    "addDeletedField": true,
+                    "addHiddenField": true,
+                    "addStarttimeEndtimeFields": false,
+                    "aggregateRoot": true,
+                    "categorizable": false,
+                    "description": "Payment transaction",
+                    "mapToTable": "",
+                    "parentClass": "",
+                    "sorting": false,
+                    "type": "Entity",
+                    "uid": "270396078673"
+                },
+                "propertyGroup": {
+                    "properties": [
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Payment sender",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": true,
+                            "propertyName": "sender",
+                            "propertyType": "String",
+                            "uid": "949245475932"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Payment amount",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": true,
+                            "propertyName": "amount",
+                            "propertyType": "Float",
+                            "uid": "1370549244555"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Transaction description",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": true,
+                            "propertyName": "description",
+                            "propertyType": "String",
+                            "uid": "310231900808"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Use as template",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": false,
+                            "propertyName": "template",
+                            "propertyType": "Boolean",
+                            "uid": "633241732379"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Payment token",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": false,
+                            "propertyName": "token",
+                            "propertyType": "String",
+                            "uid": "327325657166"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Payment token creation date",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": false,
+                            "propertyName": "created",
+                            "propertyType": "Date",
+                            "uid": "1384631578305"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Error message",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": false,
+                            "propertyName": "error",
+                            "propertyType": "Text",
+                            "uid": "614554924379"
+                        },
+                        {
+                            "allowedFileTypes": "",
+                            "maxItems": "1",
+                            "propertyDescription": "Payment charge date",
+                            "propertyIsExcludeField": false,
+                            "propertyIsRequired": false,
+                            "propertyName": "charged",
+                            "propertyType": "Date",
+                            "uid": "215225306428"
+                        }
+                    ]
+                },
+                "relationGroup": {
+                    "relations": [
+                        {
+                            "foreignRelationClass": "",
+                            "lazyLoading": false,
+                            "propertyIsExcludeField": false,
+                            "relationDescription": "",
+                            "relationName": "currency",
+                            "relationType": "zeroToOne",
+                            "relationWire": "[wired]",
+                            "uid": "1426513976003"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "config": {
+                "position": [
+                    353,
+                    35
+                ]
+            },
+            "name": "New Model Object",
+            "value": {
+                "actionGroup": {
+                    "_default0_list": false,
+                    "_default1_show": false,
+                    "_default2_new_create": false,
+                    "_default3_edit_update": false,
+                    "_default4_delete": false,
+                    "customActions": []
+                },
+                "name": "Currency",
+                "objectsettings": {
+                    "addDeletedField": true,
+                    "addHiddenField": false,
+                    "addStarttimeEndtimeFields": false,
+                    "aggregateRoot": false,
+                    "categorizable": false,
+                    "description": "Payment currency",
+                    "mapToTable": "",
+                    "parentClass": "",
+                    "sorting": false,
+                    "type": "Entity",
+                    "uid": "516564950613"
+                },
+                "propertyGroup": {
+                    "properties": []
+                },
+                "relationGroup": {
+                    "relations": [
+                        {
+                            "foreignRelationClass": "\\SJBR\\StaticInfoTables\\Domain\\Model\\Currency",
+                            "lazyLoading": false,
+                            "propertyIsExcludeField": false,
+                            "relationDescription": "Currency",
+                            "relationName": "currency",
+                            "relationType": "zeroToOne",
+                            "relationWire": "",
+                            "uid": "1026764163515"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "properties": {
+        "backendModules": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "Transaction => list"
+                },
+                "description": "Payment transaction management",
+                "key": "payment",
+                "mainModule": "tools",
+                "name": "Payment",
+                "tabLabel": "Payment"
+            }
+        ],
+        "description": "Stripe & PayPal payment platform plugins",
+        "emConf": {
+            "category": "plugin",
+            "custom_category": "",
+            "dependsOn": "typo3 => 7.4.0-7.6.99\n",
+            "disableLocalization": true,
+            "disableVersioning": true,
+            "skipGenerateDocumentationTemplate": false,
+            "sourceLanguage": "en",
+            "state": "beta",
+            "targetVersion": "7.6.0-7.6.99",
+            "version": ""
+        },
+        "extensionKey": "tw_payment",
+        "name": "tollwerk Payment Plugins",
+        "originalExtensionKey": "",
+        "originalVendorName": "",
+        "persons": [
+            {
+                "company": "tollwerk GmbH",
+                "email": "joschi@tollwerk.de",
+                "name": "Joschi Kuphal",
+                "role": "Developer"
+            }
+        ],
+        "plugins": [
+            {
+                "actions": {
+                    "controllerActionCombinations": "Transaction => show",
+                    "noncacheableActions": "Transaction => show",
+                    "switchableActions": ""
+                },
+                "key": "payment",
+                "name": "Payment transaction"
+            }
+        ],
+        "vendorName": "Tollwerk"
+    },
+    "wires": [
+        {
+            "src": {
+                "moduleId": 0,
+                "terminal": "relationWire_0",
+                "uid": "1426513976003"
+            },
+            "tgt": {
+                "moduleId": 1,
+                "terminal": "SOURCES",
+                "uid": "516564950613"
+            }
+        }
+    ],
+    "log": {
+        "last_modified": "2016-01-05 06:05",
+        "extension_builder_version": "7.6.0",
+        "be_user": " (4)"
+    }
+}
