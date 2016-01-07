@@ -10,11 +10,11 @@
             "name": "New Model Object",
             "value": {
                 "actionGroup": {
-                    "_default0_list": false,
+                    "_default0_list": true,
                     "_default1_show": true,
-                    "_default2_new_create": false,
-                    "_default3_edit_update": false,
-                    "_default4_delete": false,
+                    "_default2_new_create": true,
+                    "_default3_edit_update": true,
+                    "_default4_delete": true,
                     "customActions": []
                 },
                 "name": "Transaction",
@@ -186,11 +186,11 @@
         "backendModules": [
             {
                 "actions": {
-                    "controllerActionCombinations": "Transaction => list"
+                    "controllerActionCombinations": "Transaction => list,new,create,edit,update,delete"
                 },
                 "description": "Payment transaction management",
                 "key": "payment",
-                "mainModule": "tools",
+                "mainModule": "web",
                 "name": "Payment",
                 "tabLabel": "Payment"
             }
@@ -210,8 +210,8 @@
         },
         "extensionKey": "tw_payment",
         "name": "tollwerk Payment Plugins",
-        "originalExtensionKey": "",
-        "originalVendorName": "",
+        "originalExtensionKey": "tw_payment",
+        "originalVendorName": "Tollwerk",
         "persons": [
             {
                 "company": "tollwerk GmbH",
@@ -248,7 +248,7 @@
         }
     ],
     "log": {
-        "last_modified": "2016-01-05 06:05",
+        "last_modified": "2016-01-07 04:31",
         "extension_builder_version": "7.6.0",
         "be_user": " (4)"
     }

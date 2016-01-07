@@ -50,6 +50,25 @@ class TransactionControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 	/**
 	 * @test
 	 */
+	public function listActionFetchesAllTransactionsFromRepositoryAndAssignsThemToView()
+	{
+
+		$allTransactions = $this->getMock('TYPO3\\CMS\\Extbase\\Persistence\\ObjectStorage', array(), array(), '', FALSE);
+
+		$transactionRepository = $this->getMock('Tollwerk\\TwPayment\\Domain\\Repository\\TransactionRepository', array('findAll'), array(), '', FALSE);
+		$transactionRepository->expects($this->once())->method('findAll')->will($this->returnValue($allTransactions));
+		$this->inject($this->subject, 'transactionRepository', $transactionRepository);
+
+		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+		$view->expects($this->once())->method('assign')->with('transactions', $allTransactions);
+		$this->inject($this->subject, 'view', $view);
+
+		$this->subject->listAction();
+	}
+
+	/**
+	 * @test
+	 */
 	public function showActionAssignsTheGivenTransactionToView()
 	{
 		$transaction = new \Tollwerk\TwPayment\Domain\Model\Transaction();
@@ -59,5 +78,61 @@ class TransactionControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 		$view->expects($this->once())->method('assign')->with('transaction', $transaction);
 
 		$this->subject->showAction($transaction);
+	}
+
+	/**
+	 * @test
+	 */
+	public function createActionAddsTheGivenTransactionToTransactionRepository()
+	{
+		$transaction = new \Tollwerk\TwPayment\Domain\Model\Transaction();
+
+		$transactionRepository = $this->getMock('Tollwerk\\TwPayment\\Domain\\Repository\\TransactionRepository', array('add'), array(), '', FALSE);
+		$transactionRepository->expects($this->once())->method('add')->with($transaction);
+		$this->inject($this->subject, 'transactionRepository', $transactionRepository);
+
+		$this->subject->createAction($transaction);
+	}
+
+	/**
+	 * @test
+	 */
+	public function editActionAssignsTheGivenTransactionToView()
+	{
+		$transaction = new \Tollwerk\TwPayment\Domain\Model\Transaction();
+
+		$view = $this->getMock('TYPO3\\CMS\\Extbase\\Mvc\\View\\ViewInterface');
+		$this->inject($this->subject, 'view', $view);
+		$view->expects($this->once())->method('assign')->with('transaction', $transaction);
+
+		$this->subject->editAction($transaction);
+	}
+
+	/**
+	 * @test
+	 */
+	public function updateActionUpdatesTheGivenTransactionInTransactionRepository()
+	{
+		$transaction = new \Tollwerk\TwPayment\Domain\Model\Transaction();
+
+		$transactionRepository = $this->getMock('Tollwerk\\TwPayment\\Domain\\Repository\\TransactionRepository', array('update'), array(), '', FALSE);
+		$transactionRepository->expects($this->once())->method('update')->with($transaction);
+		$this->inject($this->subject, 'transactionRepository', $transactionRepository);
+
+		$this->subject->updateAction($transaction);
+	}
+
+	/**
+	 * @test
+	 */
+	public function deleteActionRemovesTheGivenTransactionFromTransactionRepository()
+	{
+		$transaction = new \Tollwerk\TwPayment\Domain\Model\Transaction();
+
+		$transactionRepository = $this->getMock('Tollwerk\\TwPayment\\Domain\\Repository\\TransactionRepository', array('remove'), array(), '', FALSE);
+		$transactionRepository->expects($this->once())->method('remove')->with($transaction);
+		$this->inject($this->subject, 'transactionRepository', $transactionRepository);
+
+		$this->subject->deleteAction($transaction);
 	}
 }

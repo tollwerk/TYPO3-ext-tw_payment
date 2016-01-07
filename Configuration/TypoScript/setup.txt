@@ -45,7 +45,7 @@ plugin.tx_twpayment._CSS_DEFAULT_STYLE (
 )
 
  # Module configuration
-module.tx_twpayment_tools_twpaymentpayment {
+module.tx_twpayment_web_twpaymentpayment {
 	persistence {
 		storagePid = {$module.tx_twpayment_payment.persistence.storagePid}
 	}

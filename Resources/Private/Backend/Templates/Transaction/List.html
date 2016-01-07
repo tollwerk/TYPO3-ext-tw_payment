@@ -1,0 +1,51 @@
+
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="content">
+<h1>Listing for Transaction</h1>
+
+<f:flashMessages />
+
+<table  class="tx_twpayment" >
+	<tr>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.sender" /></th>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.amount" /></th>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.description" /></th>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.template" /></th>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.token" /></th>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.created" /></th>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.error" /></th>
+		<th><f:translate key="tx_twpayment_domain_model_transaction.charged" /></th>
+		<th> </th>
+		<th> </th>
+	</tr>
+
+	<f:for each="{transactions}" as="transaction">
+		<tr>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.sender}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.amount}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.description}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.template}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.token}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.created -> f:format.date()}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.error}</f:link.action></td>
+			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.charged -> f:format.date()}</f:link.action></td>
+			<td><f:link.action action="edit" arguments="{transaction : transaction}">Edit</f:link.action></td>
+			<td><f:link.action action="delete" arguments="{transaction : transaction}">Delete</f:link.action></td>
+		</tr>
+	</f:for>
+</table>
+
+<f:link.action action="new">New Transaction</f:link.action>
+</f:section>

@@ -16,16 +16,16 @@ if (TYPO3_MODE === 'BE') {
 	 */
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
 		'Tollwerk.' . $_EXTKEY,
-		'tools',	 // Make module a submodule of 'tools'
+		'web',	 // Make module a submodule of 'web'
 		'payment',	// Submodule key
 		'',						// Position
 		array(
-			'Transaction' => 'list',
+			'Transaction' => 'list, new, create, edit, update, delete',
 			
 		),
 		array(
 			'access' => 'user,group',
-			'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
+			'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.png',
 			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_payment.xlf',
 		)
 	);
