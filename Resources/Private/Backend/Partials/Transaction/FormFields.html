@@ -1,33 +1,38 @@
+{namespace tw=Tollwerk\TwPayment\ViewHelpers}
 
-<label for="sender">
-	<f:translate key="tx_twpayment_domain_model_transaction.sender" /> <span class="required">(required)</span>
-</label><br />
-	<f:form.textfield property="sender" /><br />
-<label for="amount">
-	<f:translate key="tx_twpayment_domain_model_transaction.amount" /> <span class="required">(required)</span>
-</label><br />
-	<f:form.textfield property="amount" /><br />
-<label for="description">
-	<f:translate key="tx_twpayment_domain_model_transaction.description" /> <span class="required">(required)</span>
-</label><br />
-	<f:form.textfield property="description" /><br />
-<label for="template">
-	<f:translate key="tx_twpayment_domain_model_transaction.template" />
-</label><br />
-	<f:form.checkbox property="template" value="1" /><br />
-<label for="token">
-	<f:translate key="tx_twpayment_domain_model_transaction.token" />
-</label><br />
-	<f:form.textfield property="token" /><br />
-<label for="created">
-	<f:translate key="tx_twpayment_domain_model_transaction.created" />
-</label><br />
-	<f:form.textfield property="created"  value="{transaction.created->f:format.date()}" /><br />
-<label for="error">
-	<f:translate key="tx_twpayment_domain_model_transaction.error" />
-</label><br />
-	<f:form.textarea property="error" cols="40" rows="15" /><br />
-<label for="charged">
-	<f:translate key="tx_twpayment_domain_model_transaction.charged" />
-</label><br />
-	<f:form.textfield property="charged"  value="{transaction.charged->f:format.date()}" /><br />
+
+<f:form.validationResults for="newTransaction.sender">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:then><label class="error"></f:then>
+		<f:else><label></f:else>
+	</f:if>
+</f:form.validationResults>
+	<span><f:translate key="tx_twpayment_domain_model_transaction.sender" /></span><f:form.textfield property="sender" placeholder="{f:translate(key: 'tx_twpayment_domain_model_transaction.sender.placeholder')}" />
+</label>
+
+<f:form.validationResults for="newTransaction.amount">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:then><label class="error"></f:then>
+		<f:else><label></f:else>
+	</f:if>
+</f:form.validationResults>
+	<span><f:translate key="tx_twpayment_domain_model_transaction.amount" /></span><tw:form.numberfield property="amount" placeholder="{f:translate(key: 'tx_twpayment_domain_model_transaction.amount.placeholder')}" type="number" min="0" step="0.01"/>
+</label>
+
+<f:form.validationResults for="newTransaction.currency">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:then><label class="error"></f:then>
+		<f:else><label></f:else>
+	</f:if>
+</f:form.validationResults>
+	<span><f:translate key="tx_twpayment_domain_model_transaction.currency" /></span><f:form.select property="currency" options="{currencies}" optionLabelField="isoCodeA3" />
+</label>
+
+<f:form.validationResults for="newTransaction.description">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:then><label class="error"></f:then>
+		<f:else><label></f:else>
+	</f:if>
+</f:form.validationResults>
+	<span><f:translate key="tx_twpayment_domain_model_transaction.description" /></span><f:form.textfield property="description" placeholder="{f:translate(key: 'tx_twpayment_domain_model_transaction.description.placeholder')}"/>
+</label>

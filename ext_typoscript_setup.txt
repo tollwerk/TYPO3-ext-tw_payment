@@ -1,0 +1,17 @@
+config.tx_extbase {
+	persistence {
+		enableAutomaticCacheClearing = 1
+		classes {
+			Tollwerk\TwPayment\Domain\Model\Transaction {
+				mapping {
+					tableName						= tx_twpayment_domain_model_transaction
+					recordType						>
+					columns {
+						crdate.mapOnProperty		= crdate
+						hidden.mapOnProperty		= hidden
+					}
+				}
+			}
+		}
+	}
+}

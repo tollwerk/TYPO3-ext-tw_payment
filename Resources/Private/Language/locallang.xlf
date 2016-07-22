@@ -3,17 +3,101 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-07T16:31:20Z" product-name="tw_payment">
 		<header/>
 		<body>
+			<trans-unit id="menu.transaction.list">
+				<source>Transaction list</source>
+			</trans-unit>
+			<trans-unit id="menu.transaction.new">
+				<source>New transaction</source>
+			</trans-unit>
+			<trans-unit id="transaction.list.header">
+				<source>Transaction list</source>
+			</trans-unit>
+			<trans-unit id="transaction.list.edit">
+				<source>Edit</source>
+			</trans-unit>
+			<trans-unit id="transaction.list.delete">
+				<source>Delete</source>
+			</trans-unit>
+			<trans-unit id="transaction.list.hide">
+				<source>Hide</source>
+			</trans-unit>
+			<trans-unit id="transaction.list.created.format">
+				<source>m/d/Y</source>
+			</trans-unit>
+			<trans-unit id="transaction.new.header">
+				<source>Create new transaction</source>
+			</trans-unit>
+			<trans-unit id="transaction.new.create">
+				<source>Create transaction</source>
+			</trans-unit>
+			<trans-unit id="transaction.show.header">
+				<source>Paying with credit card</source>
+			</trans-unit>
+			<trans-unit id="transaction.show.description">
+				<source>We have prepared the following transaction for you. In the next step you will be able enter your credit card information.</source>
+			</trans-unit>
+			<trans-unit id="transaction.number.decimal">
+				<source>.</source>
+			</trans-unit>
+			<trans-unit id="transaction.number.thousands">
+				<source>,</source>
+			</trans-unit>
+			<trans-unit id="transaction.pay">
+				<source>Pay with credit card now</source>
+			</trans-unit>
+			<trans-unit id="transaction.pay.name">
+				<source>Ziereis Facsimiles</source>
+			</trans-unit>
+			<trans-unit id="transaction.pay.description">
+				<source>Your Personal Facsimile Experts</source>
+			</trans-unit>
+			<trans-unit id="error.1458140774">
+				<source>An error occured. Please correct the highlighted values.</source>
+			</trans-unit>
+			<trans-unit id="transaction.charge.header.failed">
+				<source>Create transaction failed!</source>
+			</trans-unit>
+			<trans-unit id="transaction.charge.description.failed">
+				<source>The following error occured while processing your credit card transaction:</source>
+			</trans-unit>
+			<trans-unit id="transaction.charge.action.failed">
+				<source>Please get in touch with us to sort out the issue.</source>
+			</trans-unit>
+			<trans-unit id="transaction.charge.header.succeeded">
+				<source>Transaction completed</source>
+			</trans-unit>
+			<trans-unit id="transaction.charge.description.succeeded">
+				<source>Your credit card payment has been successfully completed. We are available if you have any questions or further requests.</source>
+			</trans-unit>
+			<trans-unit id="transaction.charge.description.charged">
+				<source>This transaction has already been processed earlier. Thanks for using our service.</source>
+			</trans-unit>
+
+
+
 			<trans-unit id="tx_twpayment_domain_model_transaction">
 				<source>Transaction</source>
 			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.sender">
-				<source>Sender</source>
+				<source>Credit Card Holder</source>
+			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.sender.placeholder">
+				<source>John Doe</source>
 			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.amount">
 				<source>Amount</source>
 			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.amount.placeholder">
+				<source>123.45</source>
+			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.description">
-				<source>Description</source>
+				<source>Use</source>
+			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.url">
+				<source>Frontend URL</source>
+			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.description.placeholder">
+				<source>Invoice no. 987654</source>
 			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.template">
 				<source>Template</source>
@@ -39,6 +123,8 @@
 			<trans-unit id="tx_twpayment_domain_model_currency.currency">
 				<source>Currency</source>
 			</trans-unit>
+
+
 		</body>
 	</file>
 </xliff>

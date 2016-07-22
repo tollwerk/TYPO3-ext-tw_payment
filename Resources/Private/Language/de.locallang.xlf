@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2016-01-07T16:31:20Z"
+          product-name="tw_payment">
+        <header/>
+        <body>
+            <trans-unit id="menu.transaction.list" approved="yes">
+                <source>Transaction list</source>
+                <target state="translated">Transaktionsliste</target>
+            </trans-unit>
+            <trans-unit id="menu.transaction.new" approved="yes">
+                <source>New transaction</source>
+                <target state="translated">Neue Transaktion</target>
+            </trans-unit>
+            <trans-unit id="transaction.list.header" approved="yes">
+                <source>Transaction list</source>
+                <target state="translated">Transaktionsliste</target>
+            </trans-unit>
+            <trans-unit id="transaction.list.edit" approved="yes">
+                <source>Edit</source>
+                <target state="translated">Bearbeiten</target>
+            </trans-unit>
+            <trans-unit id="transaction.list.delete" approved="yes">
+                <source>Delete</source>
+                <target state="translated">Löschen</target>
+            </trans-unit>
+            <trans-unit id="transaction.list.hide" approved="yes">
+                <source>Hide</source>
+                <target state="translated">Ausblenden</target>
+            </trans-unit>
+            <trans-unit id="transaction.list.created.format" approved="yes">
+                <source>m/d/Y</source>
+                <target state="translated">d.m.Y</target>
+            </trans-unit>
+            <trans-unit id="transaction.new.header" approved="yes">
+                <source>Create new transaction</source>
+                <target state="translated">Neue Transaktion anlegen</target>
+            </trans-unit>
+            <trans-unit id="transaction.new.create" approved="yes">
+                <source>Create transaction</source>
+                <target state="translated">Transaktion anlegen</target>
+            </trans-unit>
+            <trans-unit id="transaction.show.header" approved="yes">
+                <source>Paying with credit card</source>
+                <target state="translated">Zahlung per Kreditkarte</target>
+            </trans-unit>
+            <trans-unit id="transaction.show.description" approved="yes">
+                <source>Use this page to carry out the following prepared credit card transaction to Ziereis
+                    Facsimiles:
+                </source>
+                <target state="translated">Wir haben die folgende Transaktion für Sie vorbereitet. Im nächsten Schritt
+                    können Sie die Kreditkarten-Daten eintragen.
+                </target>
+            </trans-unit>
+            <trans-unit id="transaction.number.decimal" approved="yes">
+                <source>.</source>
+                <target state="translated">,</target>
+            </trans-unit>
+            <trans-unit id="transaction.number.thousands" approved="yes">
+                <source>,</source>
+                <target state="translated">.</target>
+            </trans-unit>
+            <trans-unit id="transaction.pay" approved="yes">
+                <source>Pay with credit card now</source>
+                <target state="translated">Jetzt per Kreditkarte bezahlen</target>
+            </trans-unit>
+            <trans-unit id="transaction.pay.name" approved="yes">
+                <source>Ziereis Facsimiles</source>
+                <target state="translated">Ziereis Faksimiles</target>
+            </trans-unit>
+            <trans-unit id="transaction.pay.description" approved="yes">
+                <source>Your Personal Facsimile Experts</source>
+                <target state="translated">Ihre Faksimile-Experten</target>
+            </trans-unit>
+            <trans-unit id="error.1458140774" approved="yes">
+                <source>An error occured. Please correct the highlighted values.</source>
+                <target state="translated">Es ist ein Fehler aufgetreten. Bitte korrigieren Sie die hervorgehobenen
+                    Werte.
+                </target>
+            </trans-unit>
+            <trans-unit id="transaction.charge.header.failed" approved="yes">
+                <source>Create transaction failed!</source>
+                <target state="translated">Anlegen der Transaktion fehlgeschlagen!</target>
+            </trans-unit>
+            <trans-unit id="transaction.charge.description.failed" approved="yes">
+                <source>The following error occured while processing your credit card transaction:</source>
+                <target state="translated">Bei der Verarbeitung Ihrer Transaktion ist folgender Fehler aufgetreten:
+                </target>
+            </trans-unit>
+            <trans-unit id="transaction.charge.action.failed" approved="yes">
+                <source>Please get in touch with us to sort out the issue.</source>
+                <target state="translated">Bitte kontaktieren Sie uns, um etwaige Probleme zu lösen.</target>
+            </trans-unit>
+            <trans-unit id="transaction.charge.header.succeeded" approved="yes">
+                <source>Transaction completed</source>
+                <target state="translated">Transaktion erfolgreich</target>
+            </trans-unit>
+            <trans-unit id="transaction.charge.description.succeeded" approved="yes">
+                <source>Your credit card payment has been successfully completed. We are available if you have any
+                    questions or further requests.
+                </source>
+                <target state="translated">Ihre Kreditkarten-Zahlung ist erfolgreich durchgeführt worden. Bei Fragen
+                    oder weiteren Wünschen stehen wir gerne zur Verfügung.
+                </target>
+            </trans-unit>
+            <trans-unit id="transaction.charge.description.charged" approved="yes">
+                <source>This transaction has already been processed earlier. Thanks for using our service.</source>
+                <target state="translated">Diese Kreditkarten-Transaktion wurde bereits verarbeitet. Vielen Dank für die
+                    Nutzung unseres Angebots.
+                </target>
+            </trans-unit>
+
+
+            <trans-unit id="tx_twpayment_domain_model_transaction" approved="yes">
+                <source>Transaction</source>
+                <target state="translated">Transaktion</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.sender" approved="yes">
+                <source>Credit Card Holder</source>
+                <target state="translated">Absender</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.sender.placeholder" approved="yes">
+                <source>John Doe</source>
+                <target state="translated">Max Mustermann</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.amount" approved="yes">
+                <source>Amount</source>
+                <target state="translated">Betrag</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.amount.placeholder" approved="yes">
+                <source>123.45</source>
+                <target state="translated">123,45</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.description" approved="yes">
+                <source>Use</source>
+                <target state="translated">Verwendungszweck</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.url" approved="yes">
+                <source>URL</source>
+                <target state="translated">Frontend-URL</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.description.placeholder" approved="yes">
+                <source>Invoice no. 987654</source>
+                <target state="translated">Rechnung-Nr. 987654</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.template" approved="yes">
+                <source>Template</source>
+                <target state="translated">Vorlage</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.token" approved="yes">
+                <source>Token</source>
+                <target state="translated">Token</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.created" approved="yes">
+                <source>Created</source>
+                <target state="translated">Erzeugt</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.error" approved="yes">
+                <source>Error</source>
+                <target state="translated">Fehler</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.charged" approved="yes">
+                <source>Charged</source>
+                <target state="translated">Gebucht</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.currency" approved="yes">
+                <source>Currency</source>
+                <target state="translated">Währung</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_currency" approved="yes">
+                <source>Currency</source>
+                <target state="translated">Währung</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_currency.currency" approved="yes">
+                <source>Currency</source>
+                <target state="translated">Währung</target>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>

@@ -11,9 +11,10 @@ CREATE TABLE tx_twpayment_domain_model_transaction (
 	description varchar(255) DEFAULT '' NOT NULL,
 	template tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	token varchar(255) DEFAULT '' NOT NULL,
-	created int(11) DEFAULT '0' NOT NULL,
 	error text NOT NULL,
 	charged int(11) DEFAULT '0' NOT NULL,
+	created int(11) DEFAULT '0' NOT NULL,
+	ip varchar(15) DEFAULT '' NOT NULL,
 	currency int(11) unsigned DEFAULT '0',
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,

@@ -2,30 +2,30 @@
 namespace Tollwerk\TwPayment\Domain\Model;
 
 
-/***************************************************************
- *
- *  Copyright notice
- *
- *  (c) 2016 Joschi Kuphal <joschi@tollwerk.de>, tollwerk GmbH
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+    /***************************************************************
+     *
+     *  Copyright notice
+     *
+     *  (c) 2016 Joschi Kuphal <joschi@tollwerk.de>, tollwerk GmbH
+     *
+     *  All rights reserved
+     *
+     *  This script is part of the TYPO3 project. The TYPO3 project is
+     *  free software; you can redistribute it and/or modify
+     *  it under the terms of the GNU General Public License as published by
+     *  the Free Software Foundation; either version 3 of the License, or
+     *  (at your option) any later version.
+     *
+     *  The GNU General Public License can be found at
+     *  http://www.gnu.org/copyleft/gpl.html.
+     *
+     *  This script is distributed in the hope that it will be useful,
+     *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+     *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     *  GNU General Public License for more details.
+     *
+     *  This copyright notice MUST APPEAR in all copies of the script!
+     ***************************************************************/
 
 /**
  * Payment transaction
@@ -40,7 +40,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @validate NotEmpty
      */
     protected $sender = '';
-    
+
     /**
      * Payment amount
      *
@@ -48,7 +48,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @validate NotEmpty
      */
     protected $amount = 0.0;
-    
+
     /**
      * Transaction description
      *
@@ -56,49 +56,70 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @validate NotEmpty
      */
     protected $description = '';
-    
+
     /**
      * Use as template
      *
      * @var bool
      */
     protected $template = false;
-    
+
     /**
      * Payment token
      *
      * @var string
      */
     protected $token = '';
-    
+
     /**
      * Payment token creation date
      *
      * @var \DateTime
      */
     protected $created = null;
-    
+
+    /**
+     * Transaction creation date
+     *
+     * @var \DateTime
+     */
+    protected $crdate = null;
+
     /**
      * Error message
      *
      * @var string
      */
     protected $error = '';
-    
+
     /**
      * Payment charge date
      *
      * @var \DateTime
      */
     protected $charged = null;
-    
+
     /**
      * currency
      *
      * @var \Tollwerk\TwPayment\Domain\Model\Currency
      */
     protected $currency = null;
-    
+
+    /**
+     * IP address
+     *
+     * @var string
+     */
+    protected $ip = null;
+
+    /**
+     * Hidden state
+     *
+     * @var boolean
+     */
+    protected $hidden = null;
+
     /**
      * Returns the sender
      *
@@ -108,7 +129,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->sender;
     }
-    
+
     /**
      * Sets the sender
      *
@@ -119,7 +140,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->sender = $sender;
     }
-    
+
     /**
      * Returns the amount
      *
@@ -129,7 +150,17 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->amount;
     }
-    
+
+    /**
+     * Returns the amount
+     *
+     * @return float $amount
+     */
+    public function getAmountAsInt()
+    {
+        return $this->amount * 100;
+    }
+
     /**
      * Sets the amount
      *
@@ -140,7 +171,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->amount = $amount;
     }
-    
+
     /**
      * Returns the description
      *
@@ -150,7 +181,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->description;
     }
-    
+
     /**
      * Sets the description
      *
@@ -161,7 +192,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->description = $description;
     }
-    
+
     /**
      * Returns the template
      *
@@ -171,7 +202,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->template;
     }
-    
+
     /**
      * Sets the template
      *
@@ -182,7 +213,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->template = $template;
     }
-    
+
     /**
      * Returns the boolean state of template
      *
@@ -192,7 +223,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->template;
     }
-    
+
     /**
      * Returns the token
      *
@@ -202,7 +233,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->token;
     }
-    
+
     /**
      * Sets the token
      *
@@ -213,7 +244,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->token = $token;
     }
-    
+
     /**
      * Returns the created
      *
@@ -223,7 +254,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->created;
     }
-    
+
     /**
      * Sets the created
      *
@@ -234,7 +265,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->created = $created;
     }
-    
+
     /**
      * Returns the error
      *
@@ -244,7 +275,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->error;
     }
-    
+
     /**
      * Sets the error
      *
@@ -255,7 +286,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->error = $error;
     }
-    
+
     /**
      * Returns the charged
      *
@@ -265,7 +296,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->charged;
     }
-    
+
     /**
      * Sets the charged
      *
@@ -276,7 +307,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->charged = $charged;
     }
-    
+
     /**
      * Returns the currency
      *
@@ -286,7 +317,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->currency;
     }
-    
+
     /**
      * Sets the currency
      *
@@ -298,4 +329,59 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->currency = $currency;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getCrdate()
+    {
+        return $this->crdate;
+    }
+
+    /**
+     * @param \DateTime $crdate
+     */
+    public function setCrdate($crdate)
+    {
+        $this->crdate = $crdate;
+    }
+
+    /**
+     * Return the IP address
+     *
+     * @return string
+     */
+    public function getIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Set the IP address
+     *
+     * @param string $ip
+     */
+    public function setIp($ip)
+    {
+        $this->ip = $ip;
+    }
+
+    /**
+     * Return the hidden state
+     *
+     * @return boolean Transaction is hidden
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * Hide / unhide the transaction
+     *
+     * @param boolean $hidden Hide / unhide
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+    }
 }

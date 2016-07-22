@@ -1,14 +1,17 @@
 {
-    "name": "tollwerk/typo3-payment",
-    "description": "Stripe & PayPal payment platform plugins for TYPO3",
-    "authors": [
-        {
-            "name": "Joschi Kuphal",
-            "email": "joschi@kuphal.net"
-        }
-    ],
-    "minimum-stability": "RC",
-    "require": {
+  "name": "tollwerk/typo3-payment",
+  "description": "Stripe & PayPal payment platform plugins for TYPO3",
+  "authors": [
+    {
+      "name": "Joschi Kuphal",
+      "email": "joschi@kuphal.net"
+    }
+  ],
+  "minimum-stability": "RC",
+  "require": {
     "stripe/stripe-php": "3.*"
+  },
+  "config": {
+    "vendor-dir": "Vendor"
   }
 }

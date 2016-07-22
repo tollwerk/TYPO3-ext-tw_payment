@@ -34,7 +34,6 @@ class Currency extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
-     * Currency
      *
      * @var \SJBR\StaticInfoTables\Domain\Model\Currency
      */
@@ -61,4 +60,12 @@ class Currency extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->currency = $currency;
     }
 
+    /**
+     * Return the 3-letter ISO code
+     *
+     * @return string 3-letter ISO code
+     */
+    public function getIsoCodeA3() {
+        return $this->currency->getIsoCodeA3();
+    }
 }

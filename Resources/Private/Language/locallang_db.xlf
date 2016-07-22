@@ -12,6 +12,9 @@
 			<trans-unit id="tx_twpayment_domain_model_transaction.amount">
 				<source>Amount</source>
 			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.currency">
+				<source>Currency</source>
+			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.description">
 				<source>Description</source>
 			</trans-unit>

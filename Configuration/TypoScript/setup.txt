@@ -8,41 +8,13 @@ plugin.tx_twpayment_payment {
 	persistence {
 		storagePid = {$plugin.tx_twpayment_payment.persistence.storagePid}
 	}
+	settings {
+		transactionPid = {$plugin.tx_twpayment_payment.settings.transactionPid}
+		secretKey = {$plugin.tx_twpayment_payment.settings.secretKey}
+		publishableKey = {$plugin.tx_twpayment_payment.settings.publishableKey}
+		currency = {$plugin.tx_twpayment_payment.settings.currency}
+	}
 }
-
-plugin.tx_twpayment._CSS_DEFAULT_STYLE (
-	textarea.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	input.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
-
-	.tx-tw-payment table {
-		border-collapse:separate;
-		border-spacing:10px;
-	}
-
-	.tx-tw-payment table th {
-		font-weight:bold;
-	}
-
-	.tx-tw-payment table td {
-		vertical-align:top;
-	}
-
-	.typo3-messages .message-error {
-		color:red;
-	}
-
-	.typo3-messages .message-ok {
-		color:green;
-	}
-
-)
 
  # Module configuration
 module.tx_twpayment_web_twpaymentpayment {
@@ -53,5 +25,9 @@ module.tx_twpayment_web_twpaymentpayment {
 		templateRootPaths.0 = {$module.tx_twpayment_payment.view.templateRootPath}
 		partialRootPaths.0 = {$module.tx_twpayment_payment.view.partialRootPath}
 		layoutRootPaths.0 = {$module.tx_twpayment_payment.view.layoutRootPath}
+	}
+	settings {
+		transactionPid = {$plugin.tx_twpayment_payment.settings.transactionPid}
+		defaultLang = {$module.tx_twpayment_payment.settings.defaultLang}
 	}
 }

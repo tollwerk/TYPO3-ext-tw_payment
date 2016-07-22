@@ -1,0 +1,40 @@
+<f:layout name="Default"/>
+
+<f:section name="main">
+    <h1>
+        <f:if condition="{transaction.error}">
+            <f:then>
+                <f:translate key="transaction.charge.header.failed"/>
+            </f:then>
+            <f:else>
+                <f:translate key="transaction.charge.header.succeeded"/>
+            </f:else>
+        </f:if>
+    </h1>
+    <f:if condition="{transaction.error}">
+        <f:then>
+            <p class="error">
+                <f:translate key="transaction.charge.description.failed"/>
+                <ul>
+                    <li>{transaction.error}</li>
+                </ul>
+                <f:translate key="transaction.charge.action.failed"/>
+            </p>
+        </f:then>
+        <f:else>
+            <f:if condition="{charged}">
+                <f:then>
+                    <p class="success">
+                        <f:translate key="transaction.charge.description.succeeded"/>
+                    </p>
+                </f:then>
+                <f:else>
+                    <p class="charged">
+                        <f:translate key="transaction.charge.description.charged"/>
+                    </p>
+                </f:else>
+            </f:if>
+
+        </f:else>
+    </f:if>
+</f:section>

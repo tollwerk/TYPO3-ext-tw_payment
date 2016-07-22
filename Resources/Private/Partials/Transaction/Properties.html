@@ -1,67 +1,27 @@
 
 <table class="tx-tw-payment" >
 	<tr>
-		<td>
+		<td class="label">
 			<f:translate key="tx_twpayment_domain_model_transaction.sender" />
 		</td>
-		<td>
+		<td class="value">
 		{transaction.sender}
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="label">
 			<f:translate key="tx_twpayment_domain_model_transaction.amount" />
 		</td>
-		<td>
-		{transaction.amount}
+		<td class="value">
+		{transaction.amount -> f:format.number(decimals: 2, decimalSeparator: '{f:translate(key: \'transaction.number.decimal\')}', thousandsSeparator: '{f:translate(key: \'transaction.number.thousands\')}')} {transaction.currency.isoCodeA3}
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="label">
 			<f:translate key="tx_twpayment_domain_model_transaction.description" />
 		</td>
-		<td>
+		<td class="value">
 		{transaction.description}
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<f:translate key="tx_twpayment_domain_model_transaction.template" />
-		</td>
-		<td>
-		{transaction.template}
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<f:translate key="tx_twpayment_domain_model_transaction.token" />
-		</td>
-		<td>
-		{transaction.token}
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<f:translate key="tx_twpayment_domain_model_transaction.created" />
-		</td>
-		<td>
-		{transaction.created -> f:format.date()}
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<f:translate key="tx_twpayment_domain_model_transaction.error" />
-		</td>
-		<td>
-		{transaction.error}
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<f:translate key="tx_twpayment_domain_model_transaction.charged" />
-		</td>
-		<td>
-		{transaction.charged -> f:format.date()}
 		</td>
 	</tr>
 </table>

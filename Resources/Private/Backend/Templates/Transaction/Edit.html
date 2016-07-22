@@ -20,7 +20,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <f:render partial="FormErrors" />
 
 <f:form action="update" name="transaction" object="{transaction}" >
-<f:render partial="Transaction/FormFields" arguments="{transaction:transaction}" />
+<f:render partial="Transaction/FormFields" arguments="{transaction:transaction, currencies: currencies}" />
 	<f:form.submit value="Save" />
 </f:form>
 </f:section>

@@ -1,51 +1,109 @@
+{namespace tw=Tollwerk\TwPayment\ViewHelpers}
 
-<f:layout name="Default" />
-
-This Template is responsible for creating a table of domain objects.
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        List.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+<f:layout name="Default"/>
 
 <f:section name="content">
-<h1>Listing for Transaction</h1>
+    <h1>
+        <f:translate key="transaction.list.header"/>
+    </h1>
 
-<f:flashMessages />
+    <f:flashMessages/>
 
-<table  class="tx_twpayment" >
-	<tr>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.sender" /></th>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.amount" /></th>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.description" /></th>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.template" /></th>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.token" /></th>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.created" /></th>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.error" /></th>
-		<th><f:translate key="tx_twpayment_domain_model_transaction.charged" /></th>
-		<th> </th>
-		<th> </th>
-	</tr>
+    <table class="transaction-list">
+        <tr>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.sender"/>
+            </th>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.amount"/>
+            </th>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.currency"/>
+            </th>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.description"/>
+            </th>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.url"/>
+            </th>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.created"/>
+            </th>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.charged"/>
+            </th>
+            <th>
+                <f:translate key="tx_twpayment_domain_model_transaction.error"/>
+            </th>
+            <th class="control"></th>
+            <th class="control"></th>
+        </tr>
 
-	<f:for each="{transactions}" as="transaction">
-		<tr>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.sender}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.amount}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.description}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.template}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.token}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.created -> f:format.date()}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.error}</f:link.action></td>
-			<td><f:link.action action="show" arguments="{transaction : transaction}"> {transaction.charged -> f:format.date()}</f:link.action></td>
-			<td><f:link.action action="edit" arguments="{transaction : transaction}">Edit</f:link.action></td>
-			<td><f:link.action action="delete" arguments="{transaction : transaction}">Delete</f:link.action></td>
-		</tr>
-	</f:for>
-</table>
+        <f:for each="{transactions}" as="transaction">
+            <tr class="{f:if(condition: '{transaction.error}', then: 'error', else: '{f:if(condition: \'{transaction.charged}\', then: \'charged\', else: \'pending\')}')}">
+                <td>
+                    {transaction.sender}
+                </td>
+                <td>
+                    {transaction.amount}
+                </td>
+                <td>
+                    {transaction.currency.currency.isoCodeA3}
+                </td>
+                <td>
+                    {transaction.description}
+                </td>
+                <td>
+                    <ul class="languages">
+                    <f:for each="{languages}" as="label" iteration="i">
+                        <li>
+                        <tw:link.frontendaction pluginName="Payment" controller="Transaction" action="show" pageUid="{settings.transactionPid}" arguments="{transaction: transaction}" additionalParams="{L: i.index}" noCacheHash="1" target="_blank" absolute="1">{label}</tw:link.frontendaction>
+                        </li>
+                    </f:for>
+                    </ul>
+                </td>
+                <td>
+                    {transaction.crdate -> f:format.date(format: '{f:translate(key:\'transaction.list.created.format\')}')}
+                </td>
+                <td>
+                    <f:if condition="{transaction.charged}">
+                        <f:then>{transaction.charged -> f:format.date(format: '{f:translate(key:\'transaction.list.created.format\')}')}
+                        </f:then>
+                        <f:else>—</f:else>
+                    </f:if>
 
-<f:link.action action="new">New Transaction</f:link.action>
+                </td>
+                <td>
+                    <f:if condition="{transaction.error}">
+                        <f:then>{transaction.error}</f:then>
+                        <f:else>—</f:else>
+                    </f:if>
+                </td>
+                <td class="control">
+                    <f:if condition="{transaction.charged}">
+                        <f:then>&nbsp;</f:then>
+                        <f:else>
+                            <f:link.action action="edit" arguments="{transaction : transaction}">
+                                <f:translate key="transaction.list.edit"/>
+                            </f:link.action>
+                        </f:else>
+                    </f:if>
+                </td>
+                <td class="control">
+                    <f:if condition="{transaction.charged}">
+                        <f:then>
+                            <f:link.action action="hide" arguments="{transaction : transaction}">
+                                <f:translate key="transaction.list.hide"/>
+                            </f:link.action>
+                        </f:then>
+                        <f:else>
+                            <f:link.action action="delete" arguments="{transaction : transaction}">
+                                <f:translate key="transaction.list.delete"/>
+                            </f:link.action>
+                        </f:else>
+                    </f:if>
+                </td>
+            </tr>
+        </f:for>
+    </table>
 </f:section>
