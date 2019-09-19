@@ -39,7 +39,6 @@ class NumberfieldViewHelper extends TextfieldViewHelper
         parent::initializeArguments();
         $this->registerTagAttribute('min', 'float', 'Specifies the minimum amount');
         $this->registerTagAttribute('step', 'float', 'Specifies the number increment');
-        $this->registerTagAttribute('type', 'string', 'Specifies the input type (number)');
     }
 
     /**

@@ -121,6 +121,7 @@ class TransactionController extends ActionController
     public function showAction(Transaction $transaction)
     {
         $this->view->assign('transaction', $transaction);
+        $this->view->assign('locale', $GLOBALS['TSFE']->config['config']['language']);
     }
 
     /**
