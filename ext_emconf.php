@@ -11,24 +11,24 @@
  ***************************************************************/
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'tollwerk Payment Plugins',
-	'description' => 'Stripe & PayPal payment platform plugins',
-	'category' => 'plugin',
-	'author' => 'Joschi Kuphal',
-	'author_email' => 'joschi@tollwerk.de',
-	'state' => 'beta',
-	'internal' => '',
-	'uploadfolder' => '0',
-	'createDirs' => '',
-	'clearCacheOnLoad' => 0,
-	'version' => '',
-	'constraints' => array(
-		'depends' => array(
-			'typo3' => '7.4.0-7.6.99',
-		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
+    'title'            => 'tollwerk Payment Plugins',
+    'description'      => 'Stripe & PayPal payment platform plugins',
+    'category'         => 'plugin',
+    'author'           => 'Joschi Kuphal',
+    'author_email'     => 'joschi@tollwerk.de',
+    'state'            => 'beta',
+    'internal'         => '',
+    'uploadfolder'     => '0',
+    'createDirs'       => '',
+    'clearCacheOnLoad' => 0,
+    'version'          => '1.0.0',
+    'constraints'      => array(
+        'depends'   => array(
+            'php'                => '7.0.0-',
+            'typo3'              => '9.5.0-',
+            'static_info_tables' => '6.7.0-',
+        ),
+        'conflicts' => array(),
+        'suggests'  => array(),
+    ),
 );

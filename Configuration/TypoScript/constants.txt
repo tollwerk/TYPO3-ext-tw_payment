@@ -1,44 +1,44 @@
 
-plugin.tx_twpayment_payment {
+plugin.tx_twpayment {
 	view {
-		# cat=plugin.tx_twpayment_payment/file; type=string; label=Path to template root (FE)
+		# cat=plugin.tx_twpayment/file; type=string; label=Path to template root (FE)
 		templateRootPath = EXT:tw_payment/Resources/Private/Templates/
-		# cat=plugin.tx_twpayment_payment/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.tx_twpayment/file; type=string; label=Path to template partials (FE)
 		partialRootPath = EXT:tw_payment/Resources/Private/Partials/
-		# cat=plugin.tx_twpayment_payment/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.tx_twpayment/file; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:tw_payment/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.tx_twpayment_payment//a; type=int+; label=Default storage PID
+		# cat=plugin.tx_twpayment//a; type=int+; label=Default storage PID
 		storagePid =
 	}
 	settings {
-		# cat=plugin.tx_twpayment_payment//b; type=int+; label=Frontend transaction PID
+		# cat=plugin.tx_twpayment//b; type=int+; label=Frontend transaction PID
 		transactionPid =
-		# cat=plugin.tx_twpayment_payment//c; type=string; label=Stripe secret key
+		# cat=plugin.tx_twpayment//c; type=string; label=Stripe secret key
 		secretKey =
-		# cat=plugin.tx_twpayment_payment//d; type=string; label=Stripe publishable key
+		# cat=plugin.tx_twpayment//d; type=string; label=Stripe publishable key
 		publishableKey =
-		# cat=plugin.tx_twpayment_payment//d; type=options[EUR=EUR]; label=Transaction currency
+		# cat=plugin.tx_twpayment//d; type=options[EUR=EUR]; label=Transaction currency
 		currency = EUR
 	}
 }
 
-module.tx_twpayment_payment {
+module.tx_twpayment {
 	view {
-		# cat=module.tx_twpayment_payment/file; type=string; label=Path to template root (BE)
+		# cat=module.tx_twpayment/file; type=string; label=Path to template root (BE)
 		templateRootPath = EXT:tw_payment/Resources/Private/Backend/Templates/
-		# cat=module.tx_twpayment_payment/file; type=string; label=Path to template partials (BE)
+		# cat=module.tx_twpayment/file; type=string; label=Path to template partials (BE)
 		partialRootPath = EXT:tw_payment/Resources/Private/Backend/Partials/
-		# cat=module.tx_twpayment_payment/file; type=string; label=Path to template layouts (BE)
+		# cat=module.tx_twpayment/file; type=string; label=Path to template layouts (BE)
 		layoutRootPath = EXT:tw_payment/Resources/Private/Backend/Layouts/
 	}
 	persistence {
-		# cat=module.tx_twpayment_payment//a; type=int+; label=Default storage PID
+		# cat=module.tx_twpayment//a; type=int+; label=Default storage PID
 		storagePid =
 	}
 	settings {
-		# cat=module.tx_twpayment_payment//b; type=string; label=Default language label
+		# cat=module.tx_twpayment//b; type=string; label=Default language label
 		defaultLang = English
 	}
 }

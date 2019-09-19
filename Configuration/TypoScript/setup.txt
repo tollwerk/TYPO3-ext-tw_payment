@@ -1,33 +1,33 @@
 
-plugin.tx_twpayment_payment {
+plugin.tx_twpayment {
 	view {
-		templateRootPaths.0 = {$plugin.tx_twpayment_payment.view.templateRootPath}
-		partialRootPaths.0 = {$plugin.tx_twpayment_payment.view.partialRootPath}
-		layoutRootPaths.0 = {$plugin.tx_twpayment_payment.view.layoutRootPath}
+		templateRootPaths.0 = {$plugin.tx_twpayment.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_twpayment.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_twpayment.view.layoutRootPath}
 	}
 	persistence {
-		storagePid = {$plugin.tx_twpayment_payment.persistence.storagePid}
+		storagePid = {$plugin.tx_twpayment.persistence.storagePid}
 	}
 	settings {
-		transactionPid = {$plugin.tx_twpayment_payment.settings.transactionPid}
-		secretKey = {$plugin.tx_twpayment_payment.settings.secretKey}
-		publishableKey = {$plugin.tx_twpayment_payment.settings.publishableKey}
-		currency = {$plugin.tx_twpayment_payment.settings.currency}
+		transactionPid = {$plugin.tx_twpayment.settings.transactionPid}
+		secretKey = {$plugin.tx_twpayment.settings.secretKey}
+		publishableKey = {$plugin.tx_twpayment.settings.publishableKey}
+		currency = {$plugin.tx_twpayment.settings.currency}
 	}
 }
 
  # Module configuration
 module.tx_twpayment_web_twpaymentpayment {
 	persistence {
-		storagePid = {$module.tx_twpayment_payment.persistence.storagePid}
+		storagePid = {$module.tx_twpayment.persistence.storagePid}
 	}
 	view {
-		templateRootPaths.0 = {$module.tx_twpayment_payment.view.templateRootPath}
-		partialRootPaths.0 = {$module.tx_twpayment_payment.view.partialRootPath}
-		layoutRootPaths.0 = {$module.tx_twpayment_payment.view.layoutRootPath}
+		templateRootPaths.0 = {$module.tx_twpayment.view.templateRootPath}
+		partialRootPaths.0 = {$module.tx_twpayment.view.partialRootPath}
+		layoutRootPaths.0 = {$module.tx_twpayment.view.layoutRootPath}
 	}
 	settings {
-		transactionPid = {$plugin.tx_twpayment_payment.settings.transactionPid}
-		defaultLang = {$module.tx_twpayment_payment.settings.defaultLang}
+		transactionPid = {$plugin.tx_twpayment.settings.transactionPid}
+		defaultLang = {$module.tx_twpayment.settings.defaultLang}
 	}
 }

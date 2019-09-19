@@ -18,28 +18,28 @@
         <script><![CDATA[
         var stripe = StripeCheckout.configure({
             key: ']]>{settings.publishableKey}<![CDATA[',
-            image: '/fileadmin/facsimile/img/logo-stripe.png',
-                    locale: 'auto',
-                    token: function(token) {
-                        var created = new Date(token.created * 1000);
-                        var createdIso = created.getUTCFullYear() + '-' + ('0' + created.getUTCMonth()).substr(-2) + '-' + ('0' + created.getUTCDate()).substr(-2);
-                        createdIso += 'T' + ('0' + created.getUTCHours()).substr(-2) + ':' + ('0' + created.getUTCMinutes()).substr(-2) + ':' + ('0' + created.getUTCSeconds()).substr(-2);
-                        createdIso += 'Z';
-                        $('#token').val(token.id);
-                        $('#ip').val(token.client_ip);
-                        $('#created').val(createdIso);
-                        $('#payment').submit();
-                    }
-                });
+        image: '/fileadmin/facsimile/img/logo-stripe.png',
+            locale: 'auto',
+            token: function(token) {
+            var created = new Date(token.created * 1000);
+            var createdIso = created.getUTCFullYear() + '-' + ('0' + created.getUTCMonth()).substr(-2) + '-' + ('0' + created.getUTCDate()).substr(-2);
+            createdIso += 'T' + ('0' + created.getUTCHours()).substr(-2) + ':' + ('0' + created.getUTCMinutes()).substr(-2) + ':' + ('0' + created.getUTCSeconds()).substr(-2);
+            createdIso += 'Z';
+            $('#token').val(token.id);
+            $('#ip').val(token.client_ip);
+            $('#created').val(createdIso);
+            $('#payment').submit();
+        }
+        });
 
         $('#pay').on('click', function(e) {
             stripe.open({
                 name: ']]>{f:translate(key: 'transaction.pay.name')}<![CDATA[',
-                    description: ']]>{f:translate(key: 'transaction.pay.description')}<![CDATA[',
-                    zipCode: true,
-                    currency: ']]>{transaction.currency.isoCodeA3}<![CDATA[',
-                    amount: ]]>{transaction.amountAsInt}<![CDATA[
-        });
+                description: ']]>{f:translate(key: 'transaction.pay.description')}<![CDATA[',
+                zipCode: true,
+                currency: ']]>{transaction.currency.isoCodeA3}<![CDATA[',
+                amount: ]]>{transaction.amountAsInt}<![CDATA[
+            });
             e.preventDefault();
         });
 

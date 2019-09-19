@@ -1,31 +1,32 @@
 <?php
+
 namespace Tollwerk\TwPayment\Domain\Model;
 
 
-    /***************************************************************
-     *
-     *  Copyright notice
-     *
-     *  (c) 2016 Joschi Kuphal <joschi@tollwerk.de>, tollwerk GmbH
-     *
-     *  All rights reserved
-     *
-     *  This script is part of the TYPO3 project. The TYPO3 project is
-     *  free software; you can redistribute it and/or modify
-     *  it under the terms of the GNU General Public License as published by
-     *  the Free Software Foundation; either version 3 of the License, or
-     *  (at your option) any later version.
-     *
-     *  The GNU General Public License can be found at
-     *  http://www.gnu.org/copyleft/gpl.html.
-     *
-     *  This script is distributed in the hope that it will be useful,
-     *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-     *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     *  GNU General Public License for more details.
-     *
-     *  This copyright notice MUST APPEAR in all copies of the script!
-     ***************************************************************/
+/***************************************************************
+ *
+ *  Copyright notice
+ *
+ *  (c) 2016 Joschi Kuphal <joschi@tollwerk.de>, tollwerk GmbH
+ *
+ *  All rights reserved
+ *
+ *  This script is part of the TYPO3 project. The TYPO3 project is
+ *  free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The GNU General Public License can be found at
+ *  http://www.gnu.org/copyleft/gpl.html.
+ *
+ *  This script is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  This copyright notice MUST APPEAR in all copies of the script!
+ ***************************************************************/
 
 /**
  * Payment transaction
@@ -74,7 +75,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Payment token creation date
      *
-     * @var \DateTime
+     * @var int
      */
     protected $created = null;
 
@@ -134,6 +135,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the sender
      *
      * @param string $sender
+     *
      * @return void
      */
     public function setSender($sender)
@@ -165,6 +167,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the amount
      *
      * @param float $amount
+     *
      * @return void
      */
     public function setAmount($amount)
@@ -186,6 +189,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the description
      *
      * @param string $description
+     *
      * @return void
      */
     public function setDescription($description)
@@ -207,6 +211,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the template
      *
      * @param bool $template
+     *
      * @return void
      */
     public function setTemplate($template)
@@ -238,6 +243,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the token
      *
      * @param string $token
+     *
      * @return void
      */
     public function setToken($token)
@@ -248,9 +254,9 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the created
      *
-     * @return \DateTime $created
+     * @return int $created
      */
-    public function getCreated()
+    public function getCreated(): int
     {
         return $this->created;
     }
@@ -258,10 +264,11 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the created
      *
-     * @param \DateTime $created
+     * @param int $created
+     *
      * @return void
      */
-    public function setCreated(\DateTime $created)
+    public function setCreated(int $created)
     {
         $this->created = $created;
     }
@@ -280,6 +287,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the error
      *
      * @param string $error
+     *
      * @return void
      */
     public function setError($error)
@@ -301,6 +309,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the charged
      *
      * @param \DateTime $charged
+     *
      * @return void
      */
     public function setCharged(\DateTime $charged)
@@ -322,6 +331,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Sets the currency
      *
      * @param \Tollwerk\TwPayment\Domain\Model\Currency $currency
+     *
      * @return void
      */
     public function setCurrency(\Tollwerk\TwPayment\Domain\Model\Currency $currency)

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tollwerk\TwPayment\Controller;
 
 
@@ -26,45 +27,84 @@ namespace Tollwerk\TwPayment\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use SJBR\StaticInfoTables\Domain\Model\SystemLanguage;
+use SJBR\StaticInfoTables\Domain\Repository\SystemLanguageRepository;
+use Tollwerk\TwPayment\Domain\Model\Transaction;
+use Tollwerk\TwPayment\Domain\Repository\CurrencyRepository;
+use Tollwerk\TwPayment\Domain\Repository\TransactionRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * TransactionController
  */
-class TransactionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class TransactionController extends ActionController
 {
-
     /**
      * transactionRepository
      *
-     * @var \Tollwerk\TwPayment\Domain\Repository\TransactionRepository
-     * @inject
+     * @var TransactionRepository
      */
     protected $transactionRepository = null;
 
     /**
      * Currency repository
      *
-     * @var \Tollwerk\TwPayment\Domain\Repository\CurrencyRepository
-     * @inject
+     * @var CurrencyRepository
      */
     protected $currencyRepository = null;
 
     /**
-     * action list
+     * System language repository
+     *
+     * @var SystemLanguageRepository
+     */
+    protected $languageRepository;
+
+    /**
+     * Inject the transaction repository
+     *
+     * @param TransactionRepository $transactionRepository
+     */
+    public function injectTransactionRepository(TransactionRepository $transactionRepository): void
+    {
+        $this->transactionRepository = $transactionRepository;
+    }
+
+    /**
+     * Inject the currency repository
+     *
+     * @param CurrencyRepository $currencyRepository
+     */
+    public function injectCurrencyRepository(CurrencyRepository $currencyRepository): void
+    {
+        $this->currencyRepository = $currencyRepository;
+    }
+
+    /**
+     * Inject the system language repository
+     *
+     * @param SystemLanguageRepository $languageRepository
+     */
+    public function injectLanguageRepository(SystemLanguageRepository $languageRepository): void
+    {
+        $this->languageRepository = $languageRepository;
+    }
+
+    /**
+     * List action
      *
      * @return void
      */
     public function listAction()
     {
-        $languages = array(0 => $this->settings['defaultLang']);
+        $languages = [0 => $this->settings['defaultLang']];
 
         // Gather all languages
-        $languageResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid,title', 'sys_language', '');
-        if ($languageResult) {
-            while ($language = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($languageResult)) {
-                $languages[intval($language['uid'])] = $language['title'];
-            }
+        /** @var SystemLanguage $systemLanguage */
+        foreach ($this->languageRepository as $systemLanguage) {
+            $languages[$systemLanguage->getUid()] = $systemLanguage->getTitle();
         }
 
         $this->view->assign('languages', $languages);
@@ -72,23 +112,27 @@ class TransactionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     }
 
     /**
-     * action show
+     * Show action
      *
-     * @param \Tollwerk\TwPayment\Domain\Model\Transaction $transaction
+     * @param Transaction $transaction
+     *
      * @return void
      */
-    public function showAction(\Tollwerk\TwPayment\Domain\Model\Transaction $transaction)
+    public function showAction(Transaction $transaction)
     {
         $this->view->assign('transaction', $transaction);
     }
 
     /**
-     * action charge
+     * Charge action
      *
-     * @param \Tollwerk\TwPayment\Domain\Model\Transaction $transaction
+     * @param Transaction $transaction
+     *
      * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function chargeAction(\Tollwerk\TwPayment\Domain\Model\Transaction $transaction)
+    public function chargeAction(Transaction $transaction)
     {
 
         $charged = false;
@@ -102,9 +146,9 @@ class TransactionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
 
             try {
                 $charge = \Stripe\Charge::create(array(
-                    'amount' => $transaction->getAmountAsInt(),
-                    'currency' => $transaction->getCurrency()->getIsoCodeA3(),
-                    'source' => $transaction->getToken(),
+                    'amount'      => $transaction->getAmountAsInt(),
+                    'currency'    => $transaction->getCurrency()->getIsoCodeA3(),
+                    'source'      => $transaction->getToken(),
                     'description' => $transaction->getDescription(),
                 ), array(
                     'idempotency_key' => md5($transaction->getUid()),
@@ -159,10 +203,11 @@ class TransactionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action create
      *
-     * @param \Tollwerk\TwPayment\Domain\Model\Transaction $newTransaction
+     * @param Transaction $newTransaction
+     *
      * @return void
      */
-    public function createAction(\Tollwerk\TwPayment\Domain\Model\Transaction $newTransaction)
+    public function createAction(Transaction $newTransaction)
     {
         $this->addFlashMessage('The object was created.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->transactionRepository->add($newTransaction);
@@ -172,27 +217,31 @@ class TransactionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action edit
      *
-     * @param \Tollwerk\TwPayment\Domain\Model\Transaction $transaction
+     * @param Transaction $transaction
      * @ignorevalidation $transaction
+     *
      * @return void
      */
-    public function editAction(\Tollwerk\TwPayment\Domain\Model\Transaction $transaction)
+    public function editAction(Transaction $transaction)
     {
         $this->view->assignMultiple(array(
             'transaction' => $transaction,
-            'currencies' => $this->currencyRepository->findAll()
+            'currencies'  => $this->currencyRepository->findAll()
         ));
     }
 
     /**
      * action update
      *
-     * @param \Tollwerk\TwPayment\Domain\Model\Transaction $transaction
+     * @param Transaction $transaction
+     *
      * @return void
      */
-    public function updateAction(\Tollwerk\TwPayment\Domain\Model\Transaction $transaction)
+    public function updateAction(Transaction $transaction)
     {
-        $this->addFlashMessage('The object was updated: '.$transaction->getSender().' | '.$transaction->getAmount().' '.$transaction->getCurrency()->getIsoCodeA3().' | '.$transaction->getDescription(), '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage('The object was updated: '.$transaction->getSender().' | '.$transaction->getAmount().' '.$transaction->getCurrency()
+                                                                                                                                    ->getIsoCodeA3().' | '.$transaction->getDescription(),
+            '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->transactionRepository->update($transaction);
         $this->redirect('list');
     }
@@ -200,10 +249,11 @@ class TransactionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action delete
      *
-     * @param \Tollwerk\TwPayment\Domain\Model\Transaction $transaction
+     * @param Transaction $transaction
+     *
      * @return void
      */
-    public function deleteAction(\Tollwerk\TwPayment\Domain\Model\Transaction $transaction)
+    public function deleteAction(Transaction $transaction)
     {
         $this->addFlashMessage('The object was deleted.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->transactionRepository->remove($transaction);
@@ -213,10 +263,11 @@ class TransactionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
     /**
      * action hide
      *
-     * @param \Tollwerk\TwPayment\Domain\Model\Transaction $transaction
+     * @param Transaction $transaction
+     *
      * @return void
      */
-    public function hideAction(\Tollwerk\TwPayment\Domain\Model\Transaction $transaction)
+    public function hideAction(Transaction $transaction)
     {
         $this->addFlashMessage('The object was hidden.', '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $transaction->setHidden(true);

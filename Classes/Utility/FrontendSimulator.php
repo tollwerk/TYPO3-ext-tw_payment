@@ -2,11 +2,18 @@
 
 namespace Tollwerk\TwPayment\Utility;
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Error\Http\ServiceUnavailableException;
+use TYPO3\CMS\Core\TimeTracker\TimeTracker;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
+use TYPO3\CMS\Frontend\Page\PageRepository;
+
 /***************************************************************
  *  Copyright notice
  *
  *  © 2016 Dipl.-Ing. Joschi Kuphal <joschi@tollwerk.de>, tollwerk® GmbH
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,61 +36,80 @@ namespace Tollwerk\TwPayment\Utility;
 /**
  * Frontend simulator
  */
-class FrontendSimulator {
-	/**
-	 * Frontend engine backup
-	 * 
-	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 */
-	protected static $_tsfeBackup = null;
-	/**
-	 * HTTP_HOST backup
-	 * 
-	 * @var string
-	 */
-	protected static $_httpHostBackup = null;
-	
-	/**
-	 * Instanciates a frontend engine
-	 * 
-	 * @param \int $pid				Current page ID
-	 * @return void
-	 */
-	public static function simulateFrontendEnvironment($pid) {
-		self::$_tsfeBackup			= isset($GLOBALS['TSFE']) ? $GLOBALS['TSFE'] : NULL;
-		self::$_httpHostBackup		= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
+class FrontendSimulator
+{
+    /**
+     * Frontend engine backup
+     *
+     * @var TypoScriptFrontendController
+     */
+    protected static $_tsfeBackup = null;
+    /**
+     * HTTP_HOST backup
+     *
+     * @var string
+     */
+    protected static $_httpHostBackup = null;
 
-		$GLOBALS['TSFE']			= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Controller\\TypoScriptFrontendController', $GLOBALS['TYPO3_CONF_VARS'], $pid, 0, true);
-		$GLOBALS['TT']				= new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
-	
-		/* @var $tsfe \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController */
-		$tsfe						=& $GLOBALS['TSFE'];
-		$tsfe->tmpl					= \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
-		$tsfe->tmpl->init();
-		$tsfe->initFEuser();
-		// 		$tsfe->fe_user->fetchGroupData();
-		// 		$tsfe->includeTCA();
-		$tsfe->fetch_the_id();
-		$tsfe->getConfigArray();
-		// 		$tsfe->includeLibraries($tsfe->tmpl->setup['includeLibs.']);
-		// 		$tsfe->newCObj();
-		
-		// Tweak the HTTP host name
-		$rootLine					= $tsfe->sys_page->getRootLine($pid);
-		$domain						= \TYPO3\CMS\Backend\Utility\BackendUtility::firstDomainRecord($rootLine);
-		if (!$domain) {
-			$domain					= array_key_exists('baseURL', $tsfe->config) ? parse_url($tsfe->config['baseURL'], PHP_URL_HOST) : '';
-		}
-		$_SERVER['HTTP_HOST']		= $domain;
-	}
-	
-	/**
-	 * Resets the frontend engine
-	 *
-	 * @return void
-	 */
-	public static function resetFrontendEnvironment() {
-		$GLOBALS['TSFE']			= self::$_tsfeBackup;
-		$_SERVER['HTTP_HOST']		= self::$_httpHostBackup;
-	}
+    /**
+     * Instanciates a frontend engine
+     *
+     * @param \int $id Current page ID
+     *
+     * @return void
+     * @throws ServiceUnavailableException
+     */
+    public static function simulateFrontendEnvironment($id)
+    {
+        self::$_tsfeBackup     = isset($GLOBALS['TSFE']) ? $GLOBALS['TSFE'] : null;
+        self::$_httpHostBackup = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
+
+        // Initialize the tracker if necessary
+        if (!is_object($GLOBALS['TT'])) {
+            $GLOBALS['TT'] = new TimeTracker(false);
+            $GLOBALS['TT']->start();
+        }
+
+        /** @var TypoScriptFrontendController $TSFE */
+        $TSFE           = GeneralUtility::makeInstance(
+            TypoScriptFrontendController::class,
+            $GLOBALS['TYPO3_CONF_VARS'],
+            $id,
+            0
+        );
+        $TSFE->sys_page = GeneralUtility::makeInstance(PageRepository::class);
+        $TSFE->sys_page->init(true);
+        $TSFE->connectToDB();
+        $TSFE->initFEuser();
+        $TSFE->determineId();
+        $TSFE->initTemplate();
+        $TSFE->rootLine = $TSFE->sys_page->getRootLine($id, '');
+        $TSFE->getConfigArray();
+
+        // Calculate the absolute path prefix
+        if (!empty($TSFE->config['config']['absRefPrefix'])) {
+            $absRefPrefix       = trim($TSFE->config['config']['absRefPrefix']);
+            $TSFE->absRefPrefix = ($absRefPrefix === 'auto') ? GeneralUtility::getIndpEnv(
+                'TYPO3_SITE_PATH'
+            ) : $absRefPrefix;
+        } else {
+            $TSFE->absRefPrefix = '';
+        }
+        // Tweak the HTTP host name
+        $domain = BackendUtility::firstDomainRecord($TSFE->rootLine);
+        if (!$domain) {
+            $domain = array_key_exists('baseURL', $TSFE->config) ?
+                parse_url($TSFE->config['baseURL'], PHP_URL_HOST) : '';
+        }
+        $_SERVER['HTTP_HOST'] = $domain;
+    }
+
+    /**
+     * Resets the frontend engine
+     */
+    public static function resetFrontendEnvironment(): void
+    {
+        $GLOBALS['TSFE']      = self::$_tsfeBackup;
+        $_SERVER['HTTP_HOST'] = self::$_httpHostBackup;
+    }
 }

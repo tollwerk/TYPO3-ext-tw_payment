@@ -9,7 +9,7 @@ if (!defined('TYPO3_MODE')) {
     'Payment transaction'
 );
 
-if (TYPO3_MODE === 'BE') {
+if (TYPO3_MODE === 'BE') {   // hallo
 
     /**
      * Registers a Backend Module

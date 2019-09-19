@@ -55,19 +55,26 @@
                 </td>
                 <td>
                     <ul class="languages">
-                    <f:for each="{languages}" as="label" iteration="i">
-                        <li>
-                        <tw:link.frontendaction pluginName="Payment" controller="Transaction" action="show" pageUid="{settings.transactionPid}" arguments="{transaction: transaction}" additionalParams="{L: i.index}" noCacheHash="1" target="_blank" absolute="1">{label}</tw:link.frontendaction>
-                        </li>
-                    </f:for>
+                        <f:for each="{languages}" as="label" iteration="i">
+                            <li>
+                                <tw:link.frontendaction pluginName="Payment" controller="Transaction" action="show"
+                                                        pageUid="{settings.transactionPid}"
+                                                        arguments="{transaction: transaction}"
+                                                        additionalParams="{L: i.index}" noCacheHash="1" target="_blank"
+                                                        absolute="1">{label}
+                                </tw:link.frontendaction>
+                            </li>
+                        </f:for>
                     </ul>
                 </td>
                 <td>
-                    {transaction.crdate -> f:format.date(format: '{f:translate(key:\'transaction.list.created.format\')}')}
+                    {transaction.crdate -> f:format.date(format:
+                    '{f:translate(key:\'transaction.list.created.format\')}')}
                 </td>
                 <td>
                     <f:if condition="{transaction.charged}">
-                        <f:then>{transaction.charged -> f:format.date(format: '{f:translate(key:\'transaction.list.created.format\')}')}
+                        <f:then>{transaction.charged -> f:format.date(format:
+                            '{f:translate(key:\'transaction.list.created.format\')}')}
                         </f:then>
                         <f:else>—</f:else>
                     </f:if>
