@@ -1,52 +1,68 @@
-
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="main">
-    <h1><f:translate key="transaction.show.header"/></h1>
-    <f:form method="post" objectName="transaction" object="{transaction}" action="charge" id="payment">
-        <p><f:translate key="transaction.show.description"/></p>
+    <div id="stripe"
+         data-key="{settings.publishableKey}"
+         data-image="{settings.logo}"
+         data-name="{f:translate(key: 'transaction.pay.name')}"
+         data-description="{f:translate(key: 'transaction.pay.description')}"
+         data-currency="{transaction.currency.isoCodeA3}"
+         data-amount="{transaction.amountAsInt}"
+         data-locale="{locale}"
+    >
+        <h1>
+            <f:translate key="transaction.show.header"/>
+        </h1>
+        <f:form method="post" objectName="transaction" object="{transaction}" action="charge" id="payment">
+            <p>
+                <f:translate key="transaction.show.description"/>
+            </p>
 
-        <f:flashMessages />
-        <f:render partial="Transaction/Properties" arguments="{transaction:transaction}" />
-        <script src="https://checkout.stripe.com/checkout.js"></script>
+            <f:flashMessages/>
+            <f:render partial="Transaction/Properties" arguments="{transaction:transaction}"/>
+            <script src="https://checkout.stripe.com/checkout.js"></script>
 
-        <f:form.hidden property="token" id="token"/>
-        <f:form.hidden property="created" id="created"/>
-        <f:form.hidden property="ip" id="ip"/>
+            <f:form.hidden property="token" id="token"/>
+            <f:form.hidden property="created" id="created"/>
+            <f:form.hidden property="ip" id="ip"/>
 
-        <button type="button" class="button" id="pay"><f:translate key="transaction.pay"/></button>
-        <script><![CDATA[
-        var stripe = StripeCheckout.configure({
-            key: ']]>{settings.publishableKey}<![CDATA[',
-        image: '/fileadmin/facsimile/img/logo-stripe.png',
-            locale: 'auto',
-            token: function(token) {
-            var created = new Date(token.created * 1000);
-            var createdIso = created.getUTCFullYear() + '-' + ('0' + created.getUTCMonth()).substr(-2) + '-' + ('0' + created.getUTCDate()).substr(-2);
-            createdIso += 'T' + ('0' + created.getUTCHours()).substr(-2) + ':' + ('0' + created.getUTCMinutes()).substr(-2) + ':' + ('0' + created.getUTCSeconds()).substr(-2);
-            createdIso += 'Z';
-            $('#token').val(token.id);
-            $('#ip').val(token.client_ip);
-            $('#created').val(createdIso);
-            $('#payment').submit();
-        }
-        });
+            <button type="button" class="button" id="pay">
+                <f:translate key="transaction.pay"/>
+            </button>
+            <script>
+                var stripeElement = document.getElementById('stripe');
+                var stripe = StripeCheckout.configure({
+                    key: stripeElement.getAttribute('data-key'),
+                    image: stripeElement.getAttribute('data-image') ? stripeElement.getAttribute('data-image'): null,
+                    locale: stripeElement.getAttribute('data-locale'),
+                    token: function (token) {
+                        var created = new Date(token.created * 1000);
+                        var createdIso = created.getUTCFullYear() + '-' + ('0' + created.getUTCMonth()).substr(-2) + '-' + ('0' + created.getUTCDate()).substr(-2);
+                        createdIso += 'T' + ('0' + created.getUTCHours()).substr(-2) + ':' + ('0' + created.getUTCMinutes()).substr(-2) + ':' + ('0' + created.getUTCSeconds()).substr(-2);
+                        createdIso += 'Z';
+                        $('#token').val(token.id);
+                        $('#ip').val(token.client_ip);
+                        $('#created').val(createdIso);
+                        $('#payment').submit();
+                    }
+                });
 
-        $('#pay').on('click', function(e) {
-            stripe.open({
-                name: ']]>{f:translate(key: 'transaction.pay.name')}<![CDATA[',
-                description: ']]>{f:translate(key: 'transaction.pay.description')}<![CDATA[',
-                zipCode: true,
-                currency: ']]>{transaction.currency.isoCodeA3}<![CDATA[',
-                amount: ]]>{transaction.amountAsInt}<![CDATA[
-            });
-            e.preventDefault();
-        });
+                $('#pay').on('click', function (e) {
+                    stripe.open({
+                        name: stripeElement.getAttribute('data-name'),
+                        description: stripeElement.getAttribute('data-description'),
+                        zipCode: true,
+                        currency: stripeElement.getAttribute('data-currency'),
+                        amount: Number(stripeElement.getAttribute('data-amount'))
+                    });
+                    e.preventDefault();
+                });
 
-        // Close Checkout on page navigation
-        $(window).on('popstate', function() {
-            stripe.close();
-        });
-        ]]></script>
-    </f:form>
+                // Close Checkout on page navigation
+                $(window).on('popstate', function () {
+                    stripe.close();
+                });
+            </script>
+        </f:form>
+    </div>
 </f:section>
