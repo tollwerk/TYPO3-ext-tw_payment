@@ -1,0 +1,18 @@
+<f:form method="post" objectName="transaction" object="{transaction}" action="charge" id="payment">
+    <p>
+        <f:translate key="transaction.show.description"/>
+    </p>
+
+    <f:flashMessages/>
+    <f:render partial="Transaction/Properties" arguments="{transaction:transaction}"/>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+
+    <f:form.hidden property="token" id="token"/>
+    <f:form.hidden property="created" id="created"/>
+    <f:form.hidden property="ip" id="ip"/>
+
+    <button type="button" class="button" id="pay">
+        <f:translate key="transaction.pay"/>
+    </button>
+
+</f:form>
