@@ -13,6 +13,10 @@
         <h1>
             <f:translate key="transaction.show.header"/>
         </h1>
+        <p>
+            <f:translate key="transaction.show.description"/>
+        </p>
+        <f:flashMessages/>
         <f:render partial="Transaction/Show/Form" arguments="{_all}"/>
         <f:render partial="Transaction/Show/Javascript" arguments="{_all}"/>
     </div>

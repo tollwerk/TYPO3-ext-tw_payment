@@ -1,9 +1,5 @@
 <f:form method="post" objectName="transaction" object="{transaction}" action="charge" id="payment">
-    <p>
-        <f:translate key="transaction.show.description"/>
-    </p>
 
-    <f:flashMessages/>
     <f:render partial="Transaction/Properties" arguments="{transaction:transaction}"/>
     <script src="https://checkout.stripe.com/checkout.js"></script>
 
