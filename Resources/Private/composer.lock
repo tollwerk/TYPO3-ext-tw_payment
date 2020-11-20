@@ -1,36 +1,37 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "6763fffa3f6163e14b4359899139165c",
-    "content-hash": "e129214f423b5938c08fb0ab7a59f5f1",
+    "content-hash": "0f6fa951d50171fda66cb787cf6cf629",
     "packages": [
         {
             "name": "stripe/stripe-php",
-            "version": "v3.10.0",
+            "version": "v7.65.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "e40211d1d5325d99d3ce167c9ee1ade0473a608a"
+                "reference": "d4a22eeec7654efb8476fe8bea95b1e9928025a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/e40211d1d5325d99d3ce167c9ee1ade0473a608a",
-                "reference": "e40211d1d5325d99d3ce167c9ee1ade0473a608a",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/d4a22eeec7654efb8476fe8bea95b1e9928025a6",
+                "reference": "d4a22eeec7654efb8476fe8bea95b1e9928025a6",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": ">=5.3.3"
+                "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "~0.6.1",
-                "squizlabs/php_codesniffer": "~2.0"
+                "friendsofphp/php-cs-fixer": "2.16.5",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^5.7",
+                "squizlabs/php_codesniffer": "^3.3",
+                "symfony/process": "~3.4"
             },
             "type": "library",
             "extra": {
@@ -60,7 +61,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2016-03-15 18:33:48"
+            "time": "2020-11-19T19:37:25+00:00"
         }
     ],
     "packages-dev": [],
@@ -70,5 +71,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

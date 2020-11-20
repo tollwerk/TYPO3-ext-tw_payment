@@ -9,7 +9,7 @@
   ],
   "minimum-stability": "RC",
   "require": {
-    "stripe/stripe-php": "3.*"
+    "stripe/stripe-php": "7.*"
   },
   "config": {
     "vendor-dir": "Vendor"
