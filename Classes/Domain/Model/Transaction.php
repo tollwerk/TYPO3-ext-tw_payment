@@ -59,6 +59,18 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $description = '';
 
     /**
+     * Long text
+     *
+     * @var string
+     */
+    protected $text = '';
+
+    /**
+     * @var string
+     */
+    protected $image = '';
+
+    /**
      * Use as template
      *
      * @var bool
@@ -195,6 +207,40 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
     }
 
     /**

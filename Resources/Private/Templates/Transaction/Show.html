@@ -3,6 +3,7 @@
 <f:section name="main">
     <div id="stripe"
          data-key="{settings.publishableKey}"
+         data-session-id="{checkoutSession.id}" about=""
          data-image="{settings.logo}"
          data-name="{f:translate(key: 'transaction.pay.name')}"
          data-description="{f:translate(key: 'transaction.pay.description')}"
@@ -10,14 +11,21 @@
          data-amount="{transaction.amountAsInt}"
          data-locale="{locale}"
     >
-        <h1>
-            <f:translate key="transaction.show.header"/>
-        </h1>
-        <p>
-            <f:translate key="transaction.show.description"/>
-        </p>
+        <f:render partial="Elements/TitleText/Title"
+                  arguments="{title: '{f:translate(key: \'transaction.show.header\')}', subtitle: '{f:translate(key: \'transaction.show.description\')}'}"/>
         <f:flashMessages/>
         <f:render partial="Transaction/Show/Form" arguments="{_all}"/>
-        <f:render partial="Transaction/Show/Javascript" arguments="{_all}"/>
+        <script src="https://js.stripe.com/v3/"></script>
+        <script>
+            var stripeElement = document.getElementById('stripe');
+            var stripe = Stripe(stripeElement.getAttribute('data-key'));
+            $('#pay')
+                .on('click', function (e) {
+                    stripe.redirectToCheckout({
+                        sessionId: stripeElement.getAttribute('data-session-id')
+                    });
+                });
+        </script>
     </div>
 </f:section>
+

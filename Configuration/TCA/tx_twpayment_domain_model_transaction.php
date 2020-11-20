@@ -16,10 +16,10 @@ return [
         'iconfile'      => 'EXT:tw_payment/Resources/Public/Icons/tx_twpayment_domain_model_transaction.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'hidden, sender, amount, description, template, token, created, error, charged, currency',
+        'showRecordFieldList' => 'hidden, sender, amount, description, imageUri, template, token, created, error, charged, currency',
     ],
     'types'     => [
-        '1' => ['showitem' => 'hidden;;1, sender, amount, description, template, token, created, error, charged, currency, '],
+        '1' => ['showitem' => 'hidden;;1, sender, amount, description, imageUri, template, token, created, error, charged, currency, '],
     ],
     'palettes'  => [
         '1' => ['showitem' => ''],
@@ -59,6 +59,23 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim,required'
+            ],
+        ],
+        'text' => [
+            'exclude' => 0,
+            'label'   => 'LLL:EXT:tw_payment/Resources/Private/Language/locallang_db.xlf:tx_twpayment_domain_model_transaction.text',
+            'config'  => [
+                'type' => 'text',
+                'eval' => 'trim',
+            ],
+        ],
+        'image'      => [
+            'exclude' => 0,
+            'label'   => 'LLL:EXT:tw_payment/Resources/Private/Language/locallang_db.xlf:tx_twpayment_domain_model_transaction.image',
+            'config'  => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
             ],
         ],
         'template'    => [

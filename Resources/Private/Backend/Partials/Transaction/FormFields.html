@@ -36,3 +36,20 @@
 </f:form.validationResults>
 	<span><f:translate key="tx_twpayment_domain_model_transaction.description" /></span><f:form.textfield property="description" placeholder="{f:translate(key: 'tx_twpayment_domain_model_transaction.description.placeholder')}"/>
 </label>
+<f:form.validationResults for="newTransaction.text">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:then><label class="error"></f:then>
+		<f:else><label></f:else>
+	</f:if>
+</f:form.validationResults>
+	<span><f:translate key="tx_twpayment_domain_model_transaction.text" /></span><f:form.textfield property="text" placeholder="{f:translate(key: 'tx_twpayment_domain_model_transaction.description.text')}"/>
+</label>
+
+<f:form.validationResults for="newTransaction.image">
+	<f:if condition="{validationResults.flattenedErrors}">
+		<f:then><label class="error"></f:then>
+		<f:else><label></f:else>
+	</f:if>
+</f:form.validationResults>
+	<span><f:translate key="tx_twpayment_domain_model_transaction.image" /></span><f:form.textfield property="image" placeholder="{f:translate(key: 'tx_twpayment_domain_model_transaction.imageUri.image')}"/>
+</label>

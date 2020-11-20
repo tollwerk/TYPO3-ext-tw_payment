@@ -9,6 +9,8 @@ CREATE TABLE tx_twpayment_domain_model_transaction (
 	sender varchar(255) DEFAULT '' NOT NULL,
 	amount double(11,2) DEFAULT '0.00' NOT NULL,
 	description varchar(255) DEFAULT '' NOT NULL,
+	text text DEFAULT '' NOT NULL,
+	image varchar(255) DEFAULT '' NOT NULL,
 	template tinyint(1) unsigned DEFAULT '0' NOT NULL,
 	token varchar(255) DEFAULT '' NOT NULL,
 	error text NOT NULL,

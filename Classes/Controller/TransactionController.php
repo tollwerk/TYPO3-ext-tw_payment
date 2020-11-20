@@ -30,11 +30,17 @@ namespace Tollwerk\TwPayment\Controller;
 
 use SJBR\StaticInfoTables\Domain\Model\SystemLanguage;
 use SJBR\StaticInfoTables\Domain\Repository\SystemLanguageRepository;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 use Tollwerk\TwPayment\Domain\Model\Transaction;
 use Tollwerk\TwPayment\Domain\Repository\CurrencyRepository;
 use Tollwerk\TwPayment\Domain\Repository\TransactionRepository;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+
+require_once(__DIR__ . '/../../Resources/Private/Vendor/autoload.php');
 
 /**
  * TransactionController
@@ -112,6 +118,26 @@ class TransactionController extends ActionController
     }
 
     /**
+     * Get transaction success uri
+     *
+     * @return string
+     */
+    public function getTransactionSuccessUri()
+    {
+        if (!empty($this->settings['transactionSuccessPid'])) {
+            return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST');
+        }
+
+        /** @var UriBuilder $uriBuilder */
+        $uriBuilder = $this->objectManager->get(UriBuilder::class);
+
+        return $uriBuilder
+            ->setTargetPageUid($this->settings['transactionSuccessPid'])
+            ->setCreateAbsoluteUri(true)
+            ->build();
+    }
+
+    /**
      * Show action
      *
      * @param Transaction $transaction
@@ -120,8 +146,34 @@ class TransactionController extends ActionController
      */
     public function showAction(Transaction $transaction)
     {
+        // Create a stripe checkout session
+        Stripe::setApiKey($this->settings['secretKey']);
+
+
+        $checkoutSession = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items'           => [
+                [
+                    'price_data' => [
+                        'unit_amount'  => $transaction->getAmountAsInt(),
+                        'currency'     => $transaction->getCurrency()->getIsoCodeA3(),
+                        'product_data' => [
+                            'name'        => $transaction->getDescription(),
+                            'images'      => $transaction->getImage() ? [$transaction->getImage()] : null,
+                            'description' => $transaction->getText(),
+                        ],
+                    ],
+                    'quantity'   => 1,
+                ]
+            ],
+            'mode'                 => 'payment',
+            'success_url'          => $this->getTransactionSuccessUri(),
+            'cancel_url'           => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
+        ]);
+
         $this->view->assign('transaction', $transaction);
         $this->view->assign('locale', $GLOBALS['TSFE']->config['config']['language']);
+        $this->view->assign('checkoutSession', $checkoutSession->getLastResponse()->json);
     }
 
     /**
@@ -135,7 +187,6 @@ class TransactionController extends ActionController
      */
     public function chargeAction(Transaction $transaction)
     {
-
         $charged = false;
 
         // If this is a new transaction: Charge it
@@ -240,8 +291,8 @@ class TransactionController extends ActionController
      */
     public function updateAction(Transaction $transaction)
     {
-        $this->addFlashMessage('The object was updated: '.$transaction->getSender().' | '.$transaction->getAmount().' '.$transaction->getCurrency()
-                                                                                                                                    ->getIsoCodeA3().' | '.$transaction->getDescription(),
+        $this->addFlashMessage('The object was updated: ' . $transaction->getSender() . ' | ' . $transaction->getAmount() . ' ' . $transaction->getCurrency()
+                                                                                                                                              ->getIsoCodeA3() . ' | ' . $transaction->getDescription(),
             '', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
         $this->transactionRepository->update($transaction);
         $this->redirect('list');

@@ -135,6 +135,14 @@
                 <source>Use</source>
                 <target state="translated">Verwendungszweck</target>
             </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.text">
+                <source>Description</source>
+                <target>Beschreibungstext</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.image">
+                <source>Image URI</source>
+                <target>Produktbild-Adresse</target>
+            </trans-unit>
             <trans-unit id="tx_twpayment_domain_model_transaction.url" approved="yes">
                 <source>URL</source>
                 <target state="translated">Frontend-URL</target>
@@ -142,6 +150,10 @@
             <trans-unit id="tx_twpayment_domain_model_transaction.description.placeholder" approved="yes">
                 <source>Invoice no. 987654</source>
                 <target state="translated">Rechnung-Nr. 987654</target>
+            </trans-unit>
+            <trans-unit id="tx_twpayment_domain_model_transaction.image.placeholder">
+                <source>https://example.com/your/awesome/image.jpg</source>
+                <target>https://beispiel.de/produktbild.jpg</target>
             </trans-unit>
             <trans-unit id="tx_twpayment_domain_model_transaction.template" approved="yes">
                 <source>Template</source>

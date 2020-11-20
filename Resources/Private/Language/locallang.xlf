@@ -93,11 +93,20 @@
 			<trans-unit id="tx_twpayment_domain_model_transaction.description">
 				<source>Use</source>
 			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.text">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.image">
+				<source>Image URI</source>
+			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.url">
 				<source>Frontend URL</source>
 			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.description.placeholder">
 				<source>Invoice no. 987654</source>
+			</trans-unit>
+			<trans-unit id="tx_twpayment_domain_model_transaction.image.placeholder">
+				<source>https://example.com/your/awesome/image.jpg</source>
 			</trans-unit>
 			<trans-unit id="tx_twpayment_domain_model_transaction.template">
 				<source>Template</source>
