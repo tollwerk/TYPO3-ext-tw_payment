@@ -15,11 +15,13 @@ plugin.tx_twpayment {
 	settings {
 		# cat=plugin.tx_twpayment//b; type=int+; label=Frontend transaction PID
 		transactionPid =
-		# cat=plugin.tx_twpayment//c; type=string; label=Stripe secret key
+		# cat=plugin.tx_twpayment//c; type=int+; label=Transaction Success PID
+		transactionSuccessPid =
+		# cat=plugin.tx_twpayment//d; type=string; label=Stripe secret key
 		secretKey =
-		# cat=plugin.tx_twpayment//d; type=string; label=Stripe publishable key
+		# cat=plugin.tx_twpayment//e; type=string; label=Stripe publishable key
 		publishableKey =
-		# cat=plugin.tx_twpayment//d; type=options[EUR=EUR]; label=Transaction currency
+		# cat=plugin.tx_twpayment//f; type=options[EUR=EUR]; label=Transaction currency
 		currency = EUR
 	}
 }

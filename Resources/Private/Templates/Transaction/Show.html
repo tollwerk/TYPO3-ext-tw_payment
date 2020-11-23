@@ -11,21 +11,32 @@
          data-amount="{transaction.amountAsInt}"
          data-locale="{locale}"
     >
-        <f:render partial="Elements/TitleText/Title"
-                  arguments="{title: '{f:translate(key: \'transaction.show.header\')}', subtitle: '{f:translate(key: \'transaction.show.description\')}'}"/>
+
         <f:flashMessages/>
-        <f:render partial="Transaction/Show/Form" arguments="{_all}"/>
-        <script src="https://js.stripe.com/v3/"></script>
-        <script>
-            var stripeElement = document.getElementById('stripe');
-            var stripe = Stripe(stripeElement.getAttribute('data-key'));
-            $('#pay')
-                .on('click', function (e) {
-                    stripe.redirectToCheckout({
-                        sessionId: stripeElement.getAttribute('data-session-id')
-                    });
-                });
-        </script>
+        <f:if condition="{transaction.charged}">
+            <f:then>
+                <f:render partial="Elements/TitleText/Title"
+                          arguments="{title: '{f:translate(key: \'transaction.show.header\')}', subtitle: '{f:translate(key: \'transaction.charge.description.charged\')}'}"/>
+            </f:then>
+            <f:else>
+                <f:render partial="Elements/TitleText/Title"
+                          arguments="{title: '{f:translate(key: \'transaction.show.header\')}', subtitle: '{f:translate(key: \'transaction.show.description\')}'}"/>
+                <f:render partial="Transaction/Show/Form" arguments="{_all}"/>
+                <script src="https://js.stripe.com/v3/"></script>
+                <script>
+                    var stripeElement = document.getElementById('stripe');
+                    var stripe = Stripe(stripeElement.getAttribute('data-key'));
+                    $('#pay')
+                        .on('click', function (e) {
+                            stripe.redirectToCheckout({
+                                sessionId: stripeElement.getAttribute('data-session-id')
+                            });
+                        });
+                </script>
+
+            </f:else>
+        </f:if>
     </div>
+
 </f:section>
 

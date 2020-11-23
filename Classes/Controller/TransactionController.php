@@ -35,10 +35,12 @@ use Stripe\Stripe;
 use Tollwerk\TwPayment\Domain\Model\Transaction;
 use Tollwerk\TwPayment\Domain\Repository\CurrencyRepository;
 use Tollwerk\TwPayment\Domain\Repository\TransactionRepository;
+use TYPO3\CMS\Core\Exception;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 require_once(__DIR__ . '/../../Resources/Private/Vendor/autoload.php');
 
@@ -118,23 +120,47 @@ class TransactionController extends ActionController
     }
 
     /**
-     * Get transaction success uri
+     * Create checksum for transaction
+     *
+     * @param Transaction $transaction
      *
      * @return string
      */
-    public function getTransactionSuccessUri()
+    public function createChecksum(Transaction $transaction)
     {
-        if (!empty($this->settings['transactionSuccessPid'])) {
-            return GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST');
+        return md5($transaction->getUid() . $transaction->getAmountAsInt() . $transaction->getText() . $transaction->getDescription());
+    }
+
+    /**
+     * Get transaction success uri
+     *
+     * @param Transaction $transaction
+     *
+     * @return string
+     */
+    public function getTransactionSuccessUri(Transaction $transaction)
+    {
+        if (empty($this->settings['transactionPid'])) {
+            throw new Exception('Missing value for plugin.tx_twpayment.settings.transactionPid', 1606114370);
         }
 
         /** @var UriBuilder $uriBuilder */
         $uriBuilder = $this->objectManager->get(UriBuilder::class);
-
-        return $uriBuilder
-            ->setTargetPageUid($this->settings['transactionSuccessPid'])
+        $uri        = $uriBuilder
+            ->setTargetPageUid($this->settings['transactionPid'])
             ->setCreateAbsoluteUri(true)
-            ->build();
+            ->uriFor(
+                'charge',
+                [
+                    'transaction' => $transaction->getUid(),
+                    'checksum'    => $this->createChecksum($transaction),
+                ],
+                'Transaction',
+                'TwPayment',
+                'Payment'
+            );
+
+        return $uri;
     }
 
     /**
@@ -157,17 +183,17 @@ class TransactionController extends ActionController
                     'price_data' => [
                         'unit_amount'  => $transaction->getAmountAsInt(),
                         'currency'     => $transaction->getCurrency()->getIsoCodeA3(),
-                        'product_data' => [
-                            'name'        => $transaction->getDescription(),
+                        'product_data' => array_filter([
+                            'name'        => $transaction->getDescription() ?: null,
                             'images'      => $transaction->getImage() ? [$transaction->getImage()] : null,
-                            'description' => $transaction->getText(),
-                        ],
+                            'description' => $transaction->getText() ?: null,
+                        ]),
                     ],
                     'quantity'   => 1,
                 ]
             ],
             'mode'                 => 'payment',
-            'success_url'          => $this->getTransactionSuccessUri(),
+            'success_url'          => $this->getTransactionSuccessUri($transaction),
             'cancel_url'           => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
         ]);
 
@@ -180,63 +206,35 @@ class TransactionController extends ActionController
      * Charge action
      *
      * @param Transaction $transaction
+     * @param string      $checksum
      *
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function chargeAction(Transaction $transaction)
+    public function chargeAction(Transaction $transaction, string $checksum)
     {
         $charged = false;
-
-        // If this is a new transaction: Charge it
-        if (!$transaction->getCharged()) {
-            require_once(ExtensionManagementUtility::extPath('tw_payment', 'Resources/Private/Vendor/autoload.php'));
-            $charged = true;
-
-            \Stripe\Stripe::setApiKey($this->settings['secretKey']);
-
-            try {
-                $charge = \Stripe\Charge::create(array(
-                    'amount'      => $transaction->getAmountAsInt(),
-                    'currency'    => $transaction->getCurrency()->getIsoCodeA3(),
-                    'source'      => $transaction->getToken(),
-                    'description' => $transaction->getDescription(),
-                ), array(
-                    'idempotency_key' => md5($transaction->getUid()),
-                ));
-
-                if ($charge['paid']) {
-                    $this->view->assign('charge', $charge);
-                    $transaction->setCharged(new \DateTime('now'));
+        try {
+            // If this is a new transaction: Charge it
+            if (!$transaction->getCharged()) {
+                if ($checksum !== $this->createChecksum($transaction)) {
+                    throw new \Exception('Wrong transaction checksum!', 1606115142);
                 }
-
-            } catch (\Stripe\Error\Card $e) {
-                // Since it's a decline, \Stripe\Error\Card will be caught
-                $body = $e->getJsonBody();
-                $this->view->assign('error', $body['error']);
-                $transaction->setError($body['error']['message']);
-
-//            } catch (\Stripe\Error\RateLimit $e) {
-//                // Too many requests made to the API too quickly
-//            } catch (\Stripe\Error\InvalidRequest $e) {
-//                // Invalid parameters were supplied to Stripe's API
-//            } catch (\Stripe\Error\Authentication $e) {
-//                // Authentication with Stripe's API failed
-//                // (maybe you changed API keys recently)
-//            } catch (\Stripe\Error\ApiConnection $e) {
-//                // Network communication with Stripe failed
-//            } catch (\Stripe\Error\Base $e) {
-//                // Display a very generic error to the user, and maybe send
-//                // yourself an email
-
-            } catch (Exception $e) {
-                $this->view->assign('error', $e);
-                $transaction->setError($e->getMessage());
+                $transaction->setCharged(new \DateTime('now'));
+                $charged = true;
             }
-
-            $this->transactionRepository->update($transaction);
+        } catch (\Stripe\Error\Card $e) {
+            // Since it's a decline, \Stripe\Error\Card will be caught
+            $body = $e->getJsonBody();
+            $this->view->assign('error', $body['error']);
+            $transaction->setError($body['error']['message']);
+        } catch (Exception $e) {
+            $this->view->assign('error', $e);
+            $transaction->setError($e->getMessage());
         }
+
+        $this->transactionRepository->update($transaction);
 
         $this->view->assign('charged', $charged);
         $this->view->assign('transaction', $transaction);
