@@ -45,10 +45,10 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Payment amount
      *
-     * @var float
+     * @var int
      * @validate NotEmpty
      */
-    protected $amount = 0.0;
+    protected $amount = 0;
 
     /**
      * Transaction description
@@ -158,7 +158,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the amount
      *
-     * @return float $amount
+     * @return int $amount
      */
     public function getAmount()
     {
@@ -168,7 +168,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Returns the amount
      *
-     * @return float $amount
+     * @return int $amount
      */
     public function getAmountAsInt()
     {
@@ -178,7 +178,7 @@ class Transaction extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * Sets the amount
      *
-     * @param float $amount
+     * @param int $amount
      *
      * @return void
      */
