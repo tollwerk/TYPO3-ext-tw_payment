@@ -23,20 +23,10 @@
                           arguments="{title: '{f:translate(key: \'transaction.show.header\')}', subtitle: '{f:translate(key: \'transaction.show.description\')}'}"/>
                 <f:render partial="Transaction/Show/Form" arguments="{_all}"/>
                 <script src="https://js.stripe.com/v3/"></script>
-                <script>
-                    var stripeElement = document.getElementById('stripe');
-                    var stripe = Stripe(stripeElement.getAttribute('data-key'));
-                    $('#pay')
-                        .on('click', function (e) {
-                            stripe.redirectToCheckout({
-                                sessionId: stripeElement.getAttribute('data-session-id')
-                            });
-                        });
-                </script>
-
+                <script src="/typo3conf/ext/tw_payment/Resources/Public/Js/transaction_show.js"></script>
             </f:else>
         </f:if>
     </div>
-
+ 
 </f:section>
 
