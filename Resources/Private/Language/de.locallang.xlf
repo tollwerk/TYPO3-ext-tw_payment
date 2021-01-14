@@ -4,6 +4,10 @@
           product-name="tw_payment">
         <header/>
         <body>
+            <trans-unit id="backToHome">
+                <source>Back to Home</source>
+                <target>Zurück zur Startseite</target>
+            </trans-unit>
             <trans-unit id="menu.transaction.list" approved="yes">
                 <source>Transaction list</source>
                 <target state="translated">Transaktionsliste</target>

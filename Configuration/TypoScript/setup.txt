@@ -10,7 +10,6 @@ plugin.tx_twpayment {
 	}
 	settings {
 		transactionPid = {$plugin.tx_twpayment.settings.transactionPid}
-		transactionSuccessPid = {$plugin.tx_twpayment.settings.transactionSuccessPid}
 		secretKey = {$plugin.tx_twpayment.settings.secretKey}
 		publishableKey = {$plugin.tx_twpayment.settings.publishableKey}
 		currency = {$plugin.tx_twpayment.settings.currency}

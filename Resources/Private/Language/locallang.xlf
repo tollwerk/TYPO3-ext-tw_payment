@@ -3,6 +3,9 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-07T16:31:20Z" product-name="tw_payment">
 		<header/>
 		<body>
+			<trans-unit id="backToHome">
+				<source>Back to Home</source>
+			</trans-unit>
 			<trans-unit id="menu.transaction.list">
 				<source>Transaction list</source>
 			</trans-unit>
@@ -72,8 +75,6 @@
 			<trans-unit id="transaction.charge.description.charged">
 				<source>This transaction has already been processed earlier. Thanks for using our service.</source>
 			</trans-unit>
-
-
 
 			<trans-unit id="tx_twpayment_domain_model_transaction">
 				<source>Transaction</source>
